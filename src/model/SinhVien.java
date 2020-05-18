@@ -13,6 +13,7 @@ public class SinhVien {
     private String masv;
     private String hoten;
     private String ngaysinh;
+    private String gioitinh;
     private String quequan;
     private String sdt;
     private String gmail;
@@ -22,15 +23,24 @@ public class SinhVien {
     public SinhVien() {
     }
 
-    public SinhVien(String masv, String hoten, String ngaysinh, String quequan, String sdt, String gmail, String malop, String congno) {
+    public SinhVien(String masv, String hoten, String ngaysinh,String gioitinh, String quequan, String sdt, String gmail, String malop, String congno) {
         this.masv = masv;
         this.hoten = hoten;
         this.ngaysinh = ngaysinh;
+        this.gioitinh = gioitinh;
         this.quequan = quequan;
         this.sdt = sdt;
         this.gmail = gmail;
         this.malop = malop;
         this.congno = congno;
+    }
+
+    public String getGioitinh() {
+        return gioitinh;
+    }
+
+    public void setGioitinh(String gioitinh) {
+        this.gioitinh = gioitinh;
     }
 
     public String getMasv() {
