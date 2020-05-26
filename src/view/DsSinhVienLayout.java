@@ -6,6 +6,7 @@
 package view;
 
 import controller.SinhVienController;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -118,7 +119,7 @@ public class DsSinhVienLayout extends javax.swing.JPanel {
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         // TODO add your handling code here:
-        SinhVienController.getSV("", tableSinhVien);
+        SinhVienController.getSV(txtMasv.getText(), tableSinhVien);
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
 
