@@ -19,14 +19,14 @@ import thuhocphihaui.ThuHocPhiHaUI;
  * @author Son tit
  */
 public class Connect {
-    Connection connect = null;
+    public Connection connect = null;
     
     public static String USERNAME = "root";
     public static String PASSWORD = "";
     public static String DATABASEURL = "jdbc:mysql://localhost:3306/thuhocphisv";
     public static String jdbcDriver = "com.mysql.jdbc.Driver";
 
-    public void connectMysQL() {       
+    public  void connectMysQL() {       
         try {
             Class.forName(jdbcDriver);
             connect = DriverManager.getConnection(DATABASEURL, USERNAME, PASSWORD);
@@ -64,7 +64,7 @@ public class Connect {
              connectMysQL();
         }
         try {
-             statement = connect.createStatement();
+             statement = connect.createStatement();            
              return  statement.executeUpdate(sql);
              
         } catch (SQLException ex) {
@@ -80,4 +80,5 @@ public class Connect {
             Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
         }
      }
+   
 }

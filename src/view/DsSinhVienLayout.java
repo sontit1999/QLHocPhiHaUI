@@ -6,20 +6,32 @@
 package view;
 
 import controller.SinhVienController;
+import database.Connect;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author Son tit
  */
 public class DsSinhVienLayout extends javax.swing.JPanel {
-
+    SinhVienController svController;
+    Connect connect = new Connect();
+    int malopsvmuonxoa;
     /**
      * Creates new form DsSinhVienLayout
      */
     public DsSinhVienLayout() {
         setSize(1000,450);
         initComponents();
+        svController= new SinhVienController();
+        svController.getSV(txtMasv.getText(), tableSinhVien);
+       
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,6 +47,7 @@ public class DsSinhVienLayout extends javax.swing.JPanel {
         btnTimKiem = new javax.swing.JButton();
         txtMasv = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        btnXoa = new javax.swing.JButton();
 
         tableSinhVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -44,7 +57,7 @@ public class DsSinhVienLayout extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "MaSV", "Họ Tên", "Ngày Sinh", "Giới Tính", "Quê Quán", "Số điện thoại", "Gmail", "Lớp", "Công nợ"
+                "MaSV", "Họ Tên", "Ngày Sinh", "Giới Tính", "Quê Quán", "Số điện thoại", "Gmail", "Mã Lớp", "Công nợ"
             }
         ) {
             Class[] types = new Class [] {
@@ -63,6 +76,11 @@ public class DsSinhVienLayout extends javax.swing.JPanel {
             }
         });
         tableSinhVien.setPreferredSize(new java.awt.Dimension(750, 450));
+        tableSinhVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableSinhVienMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableSinhVien);
 
         btnTimKiem.setBackground(new java.awt.Color(255, 255, 51));
@@ -82,31 +100,42 @@ public class DsSinhVienLayout extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         jLabel1.setText("Mã SV");
 
+        btnXoa.setBackground(new java.awt.Color(255, 255, 51));
+        btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtMasv, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(209, 209, 209)
+                .addGap(45, 45, 45)
                 .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMasv, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
                 .addContainerGap())
@@ -119,12 +148,56 @@ public class DsSinhVienLayout extends javax.swing.JPanel {
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         // TODO add your handling code here:
-        SinhVienController.getSV(txtMasv.getText(), tableSinhVien);
+        svController.getSV(txtMasv.getText(), tableSinhVien);
     }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        String masv = txtMasv.getText().trim();
+        
+        if(masv.equals("")){
+            JOptionPane.showMessageDialog(btnXoa, "Masv không được bỏ trống!");
+        }else{
+            int malop = -1 ;
+               ResultSet result = connect.queryData("SELECT * FROM `sinhvien` WHERE masv = " + masv);
+               
+                try {
+                    while(result.next()){
+                        malop = result.getInt("malop");
+                        
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(DsSinhVienLayout.class.getName()).log(Level.SEVERE, null, ex);
+             }
+            if(svController.deleteSV(masv)==1){
+               JOptionPane.showMessageDialog(btnTimKiem, "Xóa thành công!");
+               updateDSSV();
+          
+               connect.UpdateData("UPDATE lophoc SET sosv = ((SELECT sosv FROM lophoc WHERE malop = " + malop +") - 1 ) where malop = " + malop);
+            }else{
+               JOptionPane.showMessageDialog(btnTimKiem, "Xóa không thành công!Thử lại sau");
+            }
+        }
+    }//GEN-LAST:event_btnXoaActionPerformed
+    public void updateDSSV(){
+         svController.getSV("", tableSinhVien);
+    }
+    private void tableSinhVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSinhVienMouseClicked
+        // TODO add your handling code here:
+        int column = 0;
+        int row = tableSinhVien.getSelectedRow();
+        if(row>=0){
+            String value = tableSinhVien.getModel().getValueAt(row, column).toString();
+            txtMasv.setText(value);
+            malopsvmuonxoa = Integer.parseInt(tableSinhVien.getModel().getValueAt(row, 7).toString());
+        }
+        
+    }//GEN-LAST:event_tableSinhVienMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTimKiem;
+    private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableSinhVien;

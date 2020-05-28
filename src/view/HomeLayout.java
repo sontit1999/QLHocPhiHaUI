@@ -8,7 +8,12 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 /**
  *
@@ -26,6 +31,18 @@ public class HomeLayout extends javax.swing.JFrame {
         jPanelDSsv = new DsSinhVienLayout();
         jPanelContainer.add(jPanelDSsv);
         jPanelDSsv.setVisible(true);
+        jPanelDSsv.addComponentListener ( new ComponentAdapter ()
+    {
+        public void componentShown ( ComponentEvent e )
+        {
+              jPanelDSsv.updateDSSV();
+        }
+
+        public void componentHidden ( ComponentEvent e )
+        {
+           
+        }
+    } );
         jPannelNhaphoc = new NhapHocLayout();
         jPanelContainer.add(jPannelNhaphoc);
         jPannelNhaphoc.setVisible(false);
@@ -249,6 +266,7 @@ public class HomeLayout extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtHeader.setText("DANH SÁCH SINH VIÊN");
         showJpanel(jPanelDSsv);
+
     }//GEN-LAST:event_btnDSSVActionPerformed
 
     private void btnThongbaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongbaoActionPerformed

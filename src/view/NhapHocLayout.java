@@ -5,11 +5,13 @@
  */
 package view;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.StringStack;
 import database.Connect;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.SinhVien;
 
@@ -28,6 +30,8 @@ public class NhapHocLayout extends javax.swing.JPanel {
         setSize(1000, 450);
         initComponents();
         connect = new Connect();
+        rbNam.setSelected(true);
+        initComboboxKhoa();
     }
 
     /**
@@ -49,11 +53,12 @@ public class NhapHocLayout extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        cbGioitinh = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         btnXacNhan = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         cbKhoa = new javax.swing.JComboBox<>();
+        rbNam = new javax.swing.JRadioButton();
+        rBnu = new javax.swing.JRadioButton();
 
         setPreferredSize(new java.awt.Dimension(950, 450));
 
@@ -84,8 +89,6 @@ public class NhapHocLayout extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel8.setText("Gmail");
 
-        cbGioitinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ", "Khác" }));
-
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("Giới Tính");
 
@@ -102,6 +105,25 @@ public class NhapHocLayout extends javax.swing.JPanel {
         jLabel4.setText("Khoa");
 
         cbKhoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cơ Khí", "Công Nghệ Thông Tin", "Điện Tử ", "Ngoại Ngữ", "Công Nghệ Ô Tô", "Quản Lý Kinh Doanh" }));
+
+        rbNam.setText("Nam");
+        rbNam.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbNamStateChanged(evt);
+            }
+        });
+        rbNam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbNamActionPerformed(evt);
+            }
+        });
+
+        rBnu.setText("Nữ");
+        rBnu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rBnuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -121,13 +143,16 @@ public class NhapHocLayout extends javax.swing.JPanel {
                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtQueQuan, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(txtSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtQueQuan, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(txtSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(117, 117, 117))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -141,10 +166,12 @@ public class NhapHocLayout extends javax.swing.JPanel {
                                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbKhoa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbGioitinh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50)))
-                .addGap(117, 117, 117))
+                            .addComponent(cbKhoa, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(rbNam)
+                                .addGap(18, 18, 18)
+                                .addComponent(rBnu)))
+                        .addGap(167, 167, 167))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(321, 321, 321)
                 .addComponent(btnXacNhan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -164,11 +191,12 @@ public class NhapHocLayout extends javax.swing.JPanel {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(txtNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbGioitinh))
-                .addGap(29, 29, 29)
+                    .addComponent(rbNam)
+                    .addComponent(rBnu))
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(txtQueQuan, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(txtQueQuan, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -193,57 +221,165 @@ public class NhapHocLayout extends javax.swing.JPanel {
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         // TODO add your handling code here:
-        String malop = "L001";
-        switch (cbKhoa.getSelectedIndex()) {
-            case 0:
-                JOptionPane.showMessageDialog(txtHoten, "Cơ khí");
-                break;
-            case 1:
-                JOptionPane.showMessageDialog(txtHoten, "CNTT");
-                String sqlgetclassLast = "SELECT * FROM lophoc where malop=(select max(malop) from lophoc WHERE makhoa = 'CNTT') ;";
-                int sosv = 0;
-                 {
-                     ResultSet resultSet= connect.queryData(sqlgetclassLast);
+        if (txtHoten.getText().trim().equals("") || txtNgaySinh.getText().trim().equals("") || txtQueQuan.getText().trim().equals("")  || txtSdt.getText().trim().equals("") || txtGmail.getText().trim().equals("") ) {
+            JOptionPane.showMessageDialog(txtHoten, "Không được bỏ trống trường nào !!!");          
+        }else{
+            int malop = -1;
+            switch (cbKhoa.getSelectedIndex()) {
+                case 0:
+                   
+                     {
+                        ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CK' AND sosv<70);");
+                        try {
+                            while (resultSet.next()) {
+                                malop = resultSet.getInt("malop");
+                            }
+
+                        } catch (SQLException ex) {
+                            Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    break;
+
+                case 1: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CNH' AND sosv<70);");
                     try {
                         while (resultSet.next()) {
-                               sosv = resultSet.getInt("sosv");
-                               if(sosv <=75){
-                                  malop = resultSet.getString("malop");
-                               }else{
-                                  // thêm lớp mới và gán lại mã lớp
-                               }
+                            malop = resultSet.getInt("malop");
                         }
-                       
+
                     } catch (SQLException ex) {
                         Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 break;
-            case 2:
-                JOptionPane.showMessageDialog(txtHoten, "Điện tử");
+                case 2: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CNM' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                           malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 break;
-            case 3:
-                JOptionPane.showMessageDialog(txtHoten, "NGoại ngữ");
+                case 3: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CNOTO' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                           malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 break;
-            case 4:
-                JOptionPane.showMessageDialog(txtHoten, "Công nghệ oto");
+                case 4: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CNTT' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                            malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 break;
-            case 5:
-                JOptionPane.showMessageDialog(txtHoten, "Quản lý Kinh doanh");
+                case 5: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'DT' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                             malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 break;
+                case 6: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'KT' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                             malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+                case 7: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'NN' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                             malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+                case 8: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'QLKD' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                            malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+            }
+            String gioitinh;
+            if (rbNam.isSelected()) {
+                gioitinh = "Nam";
+            } else {
+                gioitinh = "Nữ";
+            }
+            // init default pass
+            String password = txtHoten.getText().split("\\s+")[txtHoten.getText().trim().split("\\s+").length-1] + "2020";
+            String sqlAddSV = "INSERT INTO `sinhvien` (`password`, `hoten`, `ngaysinh`, `gioitinh`, `quequan`, `sdt`, `gmail`, `malop`, `congno`) VALUES ( '" + password + "','" + txtHoten.getText() + "', '" + txtNgaySinh.getText() + "', '" + gioitinh + "', '" + txtQueQuan.getText() + "', '" + txtSdt.getText() + "', '" + txtGmail.getText() + "', '" + malop + "', '0');";
+                if (connect.UpdateData(sqlAddSV) == 1) {
+                    JOptionPane.showMessageDialog(txtHoten, "Thành công!");
+                    connect.UpdateData("UPDATE lophoc SET sosv = ((SELECT sosv FROM lophoc WHERE malop = " + malop +") + 1 ) where malop = " + malop);
+                } else {
+                    JOptionPane.showMessageDialog(txtHoten, "Không thành công ! vui lòng thử lại ");
+                };
         }
 
-        String sqlAddSV = "INSERT INTO `sinhvien` ( `hoten`, `ngaysinh`, `gioitinh`, `quequan`, `sdt`, `gmail`, `malop`, `congno`) VALUES ( '" + txtHoten.getText() + "', '" + txtNgaySinh.getText() + "', '" + cbGioitinh.getItemAt(cbGioitinh.getSelectedIndex()) + "', '" + txtQueQuan.getText() + "', '" + txtSdt.getText() + "', '" + txtGmail.getText() + "', '" + malop + "', '0');";
-        if(connect.UpdateData(sqlAddSV)==1){
-            JOptionPane.showMessageDialog(txtHoten, "Thành công!");
-        };
-        
+
     }//GEN-LAST:event_btnXacNhanActionPerformed
+
+    private void rbNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNamActionPerformed
+        // TODO add your handling code here:
+        rBnu.setSelected(false);
+    }//GEN-LAST:event_rbNamActionPerformed
+
+    private void rBnuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rBnuActionPerformed
+        // TODO add your handling code here:
+        rbNam.setSelected(false);
+    }//GEN-LAST:event_rBnuActionPerformed
+
+    private void rbNamStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbNamStateChanged
+        // TODO add your handling code here:
+        if (rbNam.isSelected()) {
+            rBnu.setSelected(false);
+        } else {
+            rBnu.setSelected(true);
+        }
+    }//GEN-LAST:event_rbNamStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnXacNhan;
-    private javax.swing.JComboBox<String> cbGioitinh;
     private javax.swing.JComboBox<String> cbKhoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -252,10 +388,18 @@ public class NhapHocLayout extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JRadioButton rBnu;
+    private javax.swing.JRadioButton rbNam;
     private javax.swing.JTextField txtGmail;
     private javax.swing.JTextField txtHoten;
     private javax.swing.JTextField txtNgaySinh;
     private javax.swing.JTextField txtQueQuan;
     private javax.swing.JTextField txtSdt;
     // End of variables declaration//GEN-END:variables
+
+    private void initComboboxKhoa() {
+        String[] arrKhoa = {"Cơ khí", "Công Nghệ Hóa", "Công Nghệ May", "Công Nghệ Ô tô", "Công Nghệ Thông Tin", "Điện Tử", "Kế Toán", "Ngoại Ngữ", "Quản lý kinh doanh"};
+        DefaultComboBoxModel model = new DefaultComboBoxModel(arrKhoa);
+        cbKhoa.setModel(model);
+    }
 }
