@@ -22,6 +22,8 @@ import javax.swing.event.AncestorListener;
 public class HomeLayout extends javax.swing.JFrame {
     NhapHocLayout jPannelNhaphoc;
     DsSinhVienLayout jPanelDSsv;
+    ThongBaoNopTienLayout jpannelThongBao;
+    XuatBaoCaoLayout jpannelXuatBaoCao;
     /** Creates new form HomeLayout */
     public HomeLayout() {    
         initComponents();   
@@ -46,7 +48,12 @@ public class HomeLayout extends javax.swing.JFrame {
         jPannelNhaphoc = new NhapHocLayout();
         jPanelContainer.add(jPannelNhaphoc);
         jPannelNhaphoc.setVisible(false);
-      
+        jpannelThongBao = new ThongBaoNopTienLayout();
+        jPanelContainer.add(jpannelThongBao);
+        jpannelThongBao.setVisible(false);
+        jpannelXuatBaoCao = new XuatBaoCaoLayout();
+        jPanelContainer.add(jpannelXuatBaoCao);
+        jpannelXuatBaoCao.setVisible(false);
     }
      public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -82,6 +89,8 @@ public class HomeLayout extends javax.swing.JFrame {
     public void showJpanel(JPanel panel){  
         jPannelNhaphoc.setVisible(false);
         jPanelDSsv.setVisible(false);
+        jpannelThongBao.setVisible(false);
+        jpannelXuatBaoCao.setVisible(false);
         panel.setVisible(true);
     }
     /** This method is called from within the constructor to
@@ -259,7 +268,8 @@ public class HomeLayout extends javax.swing.JFrame {
 
     private void btnXuatBaoCaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatBaoCaoActionPerformed
         // TODO add your handling code here:
-       
+        txtHeader.setText("XUẤT BÁO CÁO");
+       showJpanel(jpannelXuatBaoCao);
     }//GEN-LAST:event_btnXuatBaoCaoActionPerformed
 
     private void btnDSSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDSSVActionPerformed
@@ -271,6 +281,8 @@ public class HomeLayout extends javax.swing.JFrame {
 
     private void btnThongbaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongbaoActionPerformed
         // TODO add your handling code here:
+        txtHeader.setText("THÔNG BÁO NỘP TIỀN HỌC PHÍ");
+        showJpanel(jpannelThongBao);
     }//GEN-LAST:event_btnThongbaoActionPerformed
 
     /**
