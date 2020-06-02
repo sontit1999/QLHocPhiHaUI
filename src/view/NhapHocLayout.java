@@ -5,6 +5,13 @@
  */
 package view;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.StringStack;
+import database.Connect;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.SinhVien;
 
@@ -14,15 +21,19 @@ import model.SinhVien;
  */
 public class NhapHocLayout extends javax.swing.JPanel {
 
+    Connect connect;
+
     /**
      * Creates new form NhapHocLayout
      */
     public NhapHocLayout() {
         setSize(1000, 450);
         initComponents();
-        
+        connect = new Connect();
+        rbNam.setSelected(true);
+        initComboboxKhoa();
     }
-     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,9 +53,12 @@ public class NhapHocLayout extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnXacNhan = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        cbKhoa = new javax.swing.JComboBox<>();
+        rbNam = new javax.swing.JRadioButton();
+        rBnu = new javax.swing.JRadioButton();
 
         setPreferredSize(new java.awt.Dimension(950, 450));
 
@@ -75,14 +89,41 @@ public class NhapHocLayout extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel8.setText("Gmail");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ", "Khác" }));
-
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("Giới Tính");
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 51));
-        jButton1.setText("Xác Nhận");
-        jButton1.setPreferredSize(new java.awt.Dimension(50, 23));
+        btnXacNhan.setBackground(new java.awt.Color(255, 255, 51));
+        btnXacNhan.setText("Xác Nhận");
+        btnXacNhan.setPreferredSize(new java.awt.Dimension(50, 23));
+        btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXacNhanActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel4.setText("Khoa");
+
+        cbKhoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cơ Khí", "Công Nghệ Thông Tin", "Điện Tử ", "Ngoại Ngữ", "Công Nghệ Ô Tô", "Quản Lý Kinh Doanh" }));
+
+        rbNam.setText("Nam");
+        rbNam.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbNamStateChanged(evt);
+            }
+        });
+        rbNam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbNamActionPerformed(evt);
+            }
+        });
+
+        rBnu.setText("Nữ");
+        rBnu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rBnuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -94,35 +135,46 @@ public class NhapHocLayout extends javax.swing.JPanel {
                         .addGap(77, 77, 77)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(20, 20, 20))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(68, 68, 68)
                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(238, 238, 238))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtHoten, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtQueQuan, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(txtSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(42, 42, 42)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(117, 117, 117))))
+                        .addGap(117, 117, 117))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHoten, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(35, 35, 35))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbKhoa, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(rbNam)
+                                .addGap(18, 18, 18)
+                                .addComponent(rBnu)))
+                        .addGap(167, 167, 167))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(321, 321, 321)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnXacNhan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(314, 314, 314))
         );
         layout.setVerticalGroup(
@@ -131,17 +183,20 @@ public class NhapHocLayout extends javax.swing.JPanel {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtHoten, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbKhoa))
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(txtNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1))
-                .addGap(29, 29, 29)
+                    .addComponent(rbNam)
+                    .addComponent(rBnu))
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(txtQueQuan, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(txtQueQuan, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -150,7 +205,7 @@ public class NhapHocLayout extends javax.swing.JPanel {
                         .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(138, 138, 138))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -161,23 +216,190 @@ public class NhapHocLayout extends javax.swing.JPanel {
 
     private void txtSdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSdtActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_txtSdtActionPerformed
+
+    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
+        // TODO add your handling code here:
+        if (txtHoten.getText().trim().equals("") || txtNgaySinh.getText().trim().equals("") || txtQueQuan.getText().trim().equals("")  || txtSdt.getText().trim().equals("") || txtGmail.getText().trim().equals("") ) {
+            JOptionPane.showMessageDialog(txtHoten, "Không được bỏ trống trường nào !!!");          
+        }else{
+            int malop = -1;
+            switch (cbKhoa.getSelectedIndex()) {
+                case 0:
+                   
+                     {
+                        ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CK' AND sosv<70);");
+                        try {
+                            while (resultSet.next()) {
+                                malop = resultSet.getInt("malop");
+                            }
+
+                        } catch (SQLException ex) {
+                            Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    break;
+
+                case 1: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CNH' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                            malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+                case 2: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CNM' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                           malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+                case 3: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CNOTO' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                           malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+                case 4: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CNTT' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                            malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+                case 5: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'DT' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                             malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+                case 6: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'KT' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                             malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+                case 7: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'NN' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                             malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+                case 8: {
+                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'QLKD' AND sosv<70);");
+                    try {
+                        while (resultSet.next()) {
+                            malop = resultSet.getInt("malop");
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+            }
+            String gioitinh;
+            if (rbNam.isSelected()) {
+                gioitinh = "Nam";
+            } else {
+                gioitinh = "Nữ";
+            }
+            // init default pass
+            String password = txtHoten.getText().split("\\s+")[txtHoten.getText().trim().split("\\s+").length-1] + "2020";
+            String sqlAddSV = "INSERT INTO `sinhvien` (`password`, `hoten`, `ngaysinh`, `gioitinh`, `quequan`, `sdt`, `gmail`, `malop`, `congno`) VALUES ( '" + password + "','" + txtHoten.getText() + "', '" + txtNgaySinh.getText() + "', '" + gioitinh + "', '" + txtQueQuan.getText() + "', '" + txtSdt.getText() + "', '" + txtGmail.getText() + "', '" + malop + "', '0');";
+                if (connect.UpdateData(sqlAddSV) == 1) {
+                    JOptionPane.showMessageDialog(txtHoten, "Thành công!");
+                    connect.UpdateData("UPDATE lophoc SET sosv = ((SELECT sosv FROM lophoc WHERE malop = " + malop +") + 1 ) where malop = " + malop);
+                } else {
+                    JOptionPane.showMessageDialog(txtHoten, "Không thành công ! vui lòng thử lại ");
+                };
+        }
+
+
+    }//GEN-LAST:event_btnXacNhanActionPerformed
+
+    private void rbNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNamActionPerformed
+        // TODO add your handling code here:
+        rBnu.setSelected(false);
+    }//GEN-LAST:event_rbNamActionPerformed
+
+    private void rBnuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rBnuActionPerformed
+        // TODO add your handling code here:
+        rbNam.setSelected(false);
+    }//GEN-LAST:event_rBnuActionPerformed
+
+    private void rbNamStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbNamStateChanged
+        // TODO add your handling code here:
+        if (rbNam.isSelected()) {
+            rBnu.setSelected(false);
+        } else {
+            rBnu.setSelected(true);
+        }
+    }//GEN-LAST:event_rbNamStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnXacNhan;
+    private javax.swing.JComboBox<String> cbKhoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JRadioButton rBnu;
+    private javax.swing.JRadioButton rbNam;
     private javax.swing.JTextField txtGmail;
     private javax.swing.JTextField txtHoten;
     private javax.swing.JTextField txtNgaySinh;
     private javax.swing.JTextField txtQueQuan;
     private javax.swing.JTextField txtSdt;
     // End of variables declaration//GEN-END:variables
+
+    private void initComboboxKhoa() {
+        String[] arrKhoa = {"Cơ khí", "Công Nghệ Hóa", "Công Nghệ May", "Công Nghệ Ô tô", "Công Nghệ Thông Tin", "Điện Tử", "Kế Toán", "Ngoại Ngữ", "Quản lý kinh doanh"};
+        DefaultComboBoxModel model = new DefaultComboBoxModel(arrKhoa);
+        cbKhoa.setModel(model);
+    }
 }

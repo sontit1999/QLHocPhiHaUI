@@ -8,8 +8,12 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.util.HashSet;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 /**
  *
@@ -18,7 +22,8 @@ import javax.swing.JPanel;
 public class HomeLayout extends javax.swing.JFrame {
     NhapHocLayout jPannelNhaphoc;
     DsSinhVienLayout jPanelDSsv;
-    NopHocPhiLayout jpanelNopHocPhi;
+    ThongBaoNopTienLayout jpannelThongBao;
+    XuatBaoCaoLayout jpannelXuatBaoCao;
     /** Creates new form HomeLayout */
     public HomeLayout() {    
         initComponents();   
@@ -28,13 +33,27 @@ public class HomeLayout extends javax.swing.JFrame {
         jPanelDSsv = new DsSinhVienLayout();
         jPanelContainer.add(jPanelDSsv);
         jPanelDSsv.setVisible(true);
+        jPanelDSsv.addComponentListener ( new ComponentAdapter ()
+    {
+        public void componentShown ( ComponentEvent e )
+        {
+              jPanelDSsv.updateDSSV();
+        }
+
+        public void componentHidden ( ComponentEvent e )
+        {
+           
+        }
+    } );
         jPannelNhaphoc = new NhapHocLayout();
         jPanelContainer.add(jPannelNhaphoc);
         jPannelNhaphoc.setVisible(false);
-        jpanelNopHocPhi = new NopHocPhiLayout();
-        jPanelContainer.add(jpanelNopHocPhi);
-        jpanelNopHocPhi.setVisible(false);
-      
+        jpannelThongBao = new ThongBaoNopTienLayout();
+        jPanelContainer.add(jpannelThongBao);
+        jpannelThongBao.setVisible(false);
+        jpannelXuatBaoCao = new XuatBaoCaoLayout();
+        jPanelContainer.add(jpannelXuatBaoCao);
+        jpannelXuatBaoCao.setVisible(false);
     }
      public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -70,7 +89,8 @@ public class HomeLayout extends javax.swing.JFrame {
     public void showJpanel(JPanel panel){  
         jPannelNhaphoc.setVisible(false);
         jPanelDSsv.setVisible(false);
-        jpanelNopHocPhi.setVisible(false);
+        jpannelThongBao.setVisible(false);
+        jpannelXuatBaoCao.setVisible(false);
         panel.setVisible(true);
     }
     /** This method is called from within the constructor to
@@ -175,15 +195,15 @@ public class HomeLayout extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabelLogo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDSSV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDSSV, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNhapHoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNhapHoc, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addGap(13, 13, 13)
-                .addComponent(btnNophocphi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNophocphi, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnThongbao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnThongbao, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnXuatBaoCao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnXuatBaoCao, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addGap(20, 20, 20))
         );
 
@@ -224,7 +244,7 @@ public class HomeLayout extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+                    .addComponent(jPanelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(txtHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -242,23 +262,27 @@ public class HomeLayout extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNhapHocActionPerformed
 
     private void btnNophocphiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNophocphiActionPerformed
-        txtHeader.setText("NỘP HỌC PHÍ");
-        showJpanel(jpanelNopHocPhi);
+        // TODO add your handling code here:
+       
     }//GEN-LAST:event_btnNophocphiActionPerformed
 
     private void btnXuatBaoCaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatBaoCaoActionPerformed
         // TODO add your handling code here:
-       
+        txtHeader.setText("XUẤT BÁO CÁO");
+       showJpanel(jpannelXuatBaoCao);
     }//GEN-LAST:event_btnXuatBaoCaoActionPerformed
 
     private void btnDSSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDSSVActionPerformed
         // TODO add your handling code here:
         txtHeader.setText("DANH SÁCH SINH VIÊN");
         showJpanel(jPanelDSsv);
+
     }//GEN-LAST:event_btnDSSVActionPerformed
 
     private void btnThongbaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongbaoActionPerformed
         // TODO add your handling code here:
+        txtHeader.setText("THÔNG BÁO NỘP TIỀN HỌC PHÍ");
+        showJpanel(jpannelThongBao);
     }//GEN-LAST:event_btnThongbaoActionPerformed
 
     /**
