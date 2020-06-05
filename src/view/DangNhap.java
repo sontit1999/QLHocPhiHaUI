@@ -17,7 +17,9 @@ import javax.swing.JOptionPane;
  * @author Son tit
  */
 public class DangNhap extends javax.swing.JFrame {
+
     Connect con;
+
     /**
      * Creates new form DangNhap
      */
@@ -113,20 +115,30 @@ public class DangNhap extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public static String tk;
     private void btnDangnhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangnhapActionPerformed
         // TODO add your handling code here:
-        String tk = txtTaikhoan.getText().trim();
+        tk = txtTaikhoan.getText().trim();
         String pass = txtMk.getText().trim();
-        if(tk.equals("")  || pass.equals("")){
+        if (tk.equals("") || pass.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Không dc bỏ trống!");
-        }else{
-            ResultSet result = con.queryData("SELECT * FROM sinhvien WHERE masv = '"+tk+ "' AND password = '"+pass+"'");
+        } else {
+            ResultSet result = con.queryData("SELECT * FROM sinhvien WHERE masv = '" + tk + "' AND password = '" + pass + "'");
             try {
-                if(result.next()){
-                    JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công!");
-                }else{
+                if (tk.equals("admin") && pass.equals("123")) {
+                    JOptionPane.showMessageDialog(rootPane, "Đăng nhập admin thành công");
+                    this.setVisible(false);
+                    HomeLayout jpannelHome = new HomeLayout();
+                    jpannelHome.setVisible(true);
+                } else if (result.next()) {
+                    JOptionPane.showMessageDialog(rootPane, "Đăng nhập sinh viên thành công!");
+                    this.setVisible(false);
+                    ThongBaoSinhVienLayOut jpannelThongBaoSinhVien = new ThongBaoSinhVienLayOut();
+                    jpannelThongBaoSinhVien.setVisible(true);
+                } else {
                     JOptionPane.showMessageDialog(rootPane, "Tài khoản hoặc mật khẩu không chính xác!");
                 }
+
             } catch (SQLException ex) {
                 Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
             }

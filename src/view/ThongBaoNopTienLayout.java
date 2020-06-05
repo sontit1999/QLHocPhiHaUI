@@ -4,22 +4,26 @@
  * and open the template in the editor.
  */
 package view;
+
 import database.Connect;
 import javax.swing.JOptionPane;
 import java.text.DecimalFormat;
+
 /**
  *
  * @author quyen
  */
 public class ThongBaoNopTienLayout extends javax.swing.JPanel {
+
     Connect connect;
+
     /**
      * Creates new form ThongBaoNopTienLayout
      */
     public ThongBaoNopTienLayout() {
         initComponents();
         setSize(1000, 450);
-        connect=new Connect();
+        connect = new Connect();
     }
 
     /**
@@ -158,22 +162,19 @@ public class ThongBaoNopTienLayout extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(txtsotien.getText().equals("")||txtky.getText().equals("")||txtnamhoc.getText().equals("")||txttungay.getText().equals("")||txtdenngay.getText().equals("")||txtthongbao.getText().equals(""))
-        {
-             JOptionPane.showMessageDialog(null, "Dữ liệu không được để trống",
-                  "Thông báo", JOptionPane.WARNING_MESSAGE);
-        }
-        else
-        {
-            String sqlthongbao="INSERT INTO `sohocphi` (`id`, `thongbao`, `ngaybd`, `ngaykt`, `sotiennop`, `hocky`) VALUES (NULL, '"+ txtthongbao.getText()+"', '"+txttungay.getText()+"', '"+txtdenngay.getText()+"', '"+txtsotien.getText()+"', '"+txtky.getText()+"')";
-             if (connect.UpdateData(sqlthongbao) == 1) {
-                    JOptionPane.showMessageDialog(txtsotien,"Thành công");
-                    String sqltrutien = "UPDATE `sinhvien` SET congno=congno-"+txtsotien.getText();
-                    connect.UpdateData(sqltrutien);
-                    
-                } else {
-                    JOptionPane.showMessageDialog(txtsotien,"Không thành công");
-                };
+        if (txtsotien.getText().equals("") || txtky.getText().equals("") || txtnamhoc.getText().equals("") || txttungay.getText().equals("") || txtdenngay.getText().equals("") || txtthongbao.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu không được để trống",
+                    "Thông báo", JOptionPane.WARNING_MESSAGE);
+        } else {
+            String sqlthongbao = "INSERT INTO `sohocphi` (`id`, `thongbao`, `ngaybd`, `ngaykt`, `sotiennop`, `hocky`) VALUES (NULL, '" + txtthongbao.getText() + "', '" + txttungay.getText() + "', '" + txtdenngay.getText() + "', '" + txtsotien.getText() + "', '" + txtky.getText() + "')";
+            if (connect.UpdateData(sqlthongbao) == 1) {
+                JOptionPane.showMessageDialog(txtsotien, "Thành công");
+                String sqltrutien = "UPDATE `sinhvien` SET congno=congno-" + txtsotien.getText();
+                connect.UpdateData(sqltrutien);
+
+            } else {
+                JOptionPane.showMessageDialog(txtsotien, "Không thành công");
+            };
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

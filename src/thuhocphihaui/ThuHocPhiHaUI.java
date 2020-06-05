@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import view.DangNhap;
 
 /**
  *
@@ -32,6 +33,8 @@ public class ThuHocPhiHaUI {
                 System.out.println("Họ tên:" + result.getString("hoten"));
                 System.out.println("Quê:" + result.getString("quequan"));
                 System.out.println("=====================================");
+                DangNhap dangnhap = new DangNhap();
+                dangnhap.setVisible(true);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ThuHocPhiHaUI.class.getName()).log(Level.SEVERE, null, ex);

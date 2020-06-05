@@ -58,7 +58,7 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanelMenu" max="32767" attributes="0"/>
+                  <Component id="jPanelMenu" pref="413" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Component id="txtHeader" max="32767" attributes="0"/>
@@ -108,15 +108,15 @@
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jLabelLogo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="btnDSSV" pref="46" max="32767" attributes="0"/>
+                  <Component id="btnDSSV" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="btnNhapHoc" pref="49" max="32767" attributes="0"/>
+                  <Component id="btnNhapHoc" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                  <Component id="btnNophocphi" pref="49" max="32767" attributes="0"/>
+                  <Component id="btnNophocphi" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="btnThongbao" pref="49" max="32767" attributes="0"/>
+                  <Component id="btnThongbao" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="btnXuatBaoCao" pref="51" max="32767" attributes="0"/>
+                  <Component id="btnXuatBaoCao" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
           </Group>
