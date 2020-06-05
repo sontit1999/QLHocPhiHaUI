@@ -179,7 +179,7 @@ public class XuatBaoCaoLayout extends javax.swing.JPanel {
             list.clear();
             DefaultTableModel model = (DefaultTableModel) bangbaocao.getModel();
             model.setRowCount(0);
-            // truy vấn database và thêm vài list
+            // truy vấn database và thêm vào list
             ResultSet resultset = connect.queryData("select * from sinhvien");
             try {
                 while (resultset.next()) {
@@ -200,5 +200,13 @@ public class XuatBaoCaoLayout extends javax.swing.JPanel {
             }
         }
 
+    }
+
+    public void updateSv() {
+        if (cbChoose.getSelectedItem().toString().equals("Tất Cả")) {
+            hienthidsdv(1);
+        } else {
+            hienthidsdv(0);
+        }
     }
 }
