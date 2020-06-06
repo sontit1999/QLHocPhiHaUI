@@ -350,6 +350,7 @@ public class NhapHocLayout extends javax.swing.JPanel {
                 if (connect.UpdateData(sqlAddSV) == 1) {
                     JOptionPane.showMessageDialog(txtHoten, "Thành công!");
                     connect.UpdateData("UPDATE lophoc SET sosv = ((SELECT sosv FROM lophoc WHERE malop = " + malop +") + 1 ) where malop = " + malop);
+                    clearField();
                 } else {
                     JOptionPane.showMessageDialog(txtHoten, "Không thành công ! vui lòng thử lại ");
                 };
@@ -357,7 +358,13 @@ public class NhapHocLayout extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_btnXacNhanActionPerformed
-
+    public void clearField(){
+       txtHoten.setText("");
+       txtGmail.setText("");
+       txtNgaySinh.setText("");
+       txtQueQuan.setText("");
+       txtSdt.setText("");
+    }
     private void rbNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNamActionPerformed
         // TODO add your handling code here:
         rBnu.setSelected(false);
