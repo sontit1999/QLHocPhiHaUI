@@ -19,7 +19,7 @@ import view.DangNhap;
  * @author Son tit
  */
 public class ThuHocPhiHaUI {
-    
+
     /**
      * @param args the command line arguments
      */
@@ -29,7 +29,7 @@ public class ThuHocPhiHaUI {
         connect.connectMysQL();
         ResultSet result = connect.queryData("select * from sinhvien");
         try {
-            while(result.next()){
+            if(result.next()) {
                 System.out.println("Họ tên:" + result.getString("hoten"));
                 System.out.println("Quê:" + result.getString("quequan"));
                 System.out.println("=====================================");
@@ -41,5 +41,5 @@ public class ThuHocPhiHaUI {
         }
         connect.releaseSql();
     }
-    
+
 }
