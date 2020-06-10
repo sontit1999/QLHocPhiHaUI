@@ -149,7 +149,7 @@ public class XuatBaoCaoLayout extends javax.swing.JPanel {
         if (cbChoose.getSelectedItem().toString().equals("Chưa hoàn thành")) {
             System.out.println("Create file excel");
             XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet sheet = workbook.createSheet("Customer_Info");
+            XSSFSheet sheet = workbook.createSheet("sinhvien");
             int rowNum = 0;
             Row firstRow = sheet.createRow(rowNum++);
             Cell firstCell = firstRow.createCell(0);
@@ -198,14 +198,17 @@ public class XuatBaoCaoLayout extends javax.swing.JPanel {
         } else {
             System.out.println("Create file excel");
             XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet sheet = workbook.createSheet("Customer_Info");
-            int rowNum = 0;
-            Row firstRow = sheet.createRow(rowNum++);
-            Cell firstCell = firstRow.createCell(0);
-            firstCell.setCellValue("DANH SÁCH SINH VIÊN");
-            List<SinhVien> list = new ArrayList<>();
+
+            
             String[] makhoa = new String[]{"CNH", "CK", "CNM", "CNOTO", "CNTT", "DT", "KT", "NN", "QLKD"};
             for (String khoa : makhoa) {
+                List<SinhVien> list = new ArrayList<>();
+                list.clear();
+                XSSFSheet sheet = workbook.createSheet(khoa);
+                int rowNum = 0;
+                Row firstRow = sheet.createRow(rowNum++);
+                Cell firstCell = firstRow.createCell(0);
+                firstCell.setCellValue("DANH SÁCH SINH VIÊN");
 
                 ResultSet resultset = connect.queryData("SELECT * FROM sinhvien WHERE sinhvien.malop in ( SELECT malop from lophoc WHERE lophoc.makhoa ='" + khoa + "' )");
                 try {
@@ -218,29 +221,30 @@ public class XuatBaoCaoLayout extends javax.swing.JPanel {
                 } catch (SQLException ex) {
                     Logger.getLogger(SinhVienController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                for (SinhVien i : list) {
+                    Row row = sheet.createRow(rowNum++);
+                    Cell cell1 = row.createCell(0);
+                    cell1.setCellValue(i.getMasv());
+                    Cell cell2 = row.createCell(1);
+                    cell2.setCellValue(i.getHoten());
+                    Cell cell3 = row.createCell(2);
+                    cell3.setCellValue(i.getNgaysinh());
+                    Cell cell4 = row.createCell(3);
+                    cell4.setCellValue(i.getGioitinh());
+                    Cell cell5 = row.createCell(4);
+                    cell5.setCellValue(i.getQuequan());
+                    Cell cell6 = row.createCell(5);
+                    cell6.setCellValue(i.getSdt());
+                    Cell cell7 = row.createCell(6);
+                    cell7.setCellValue(i.getGmail());
+                    Cell cell8 = row.createCell(7);
+                    cell8.setCellValue(i.getMalop());
+                    Cell cell9 = row.createCell(8);
+                    cell9.setCellValue(i.getCongno());
+                }
 
             }
-            for (SinhVien i : list) {
-                Row row = sheet.createRow(rowNum++);
-                Cell cell1 = row.createCell(0);
-                cell1.setCellValue(i.getMasv());
-                Cell cell2 = row.createCell(1);
-                cell2.setCellValue(i.getHoten());
-                Cell cell3 = row.createCell(2);
-                cell3.setCellValue(i.getNgaysinh());
-                Cell cell4 = row.createCell(3);
-                cell4.setCellValue(i.getGioitinh());
-                Cell cell5 = row.createCell(4);
-                cell5.setCellValue(i.getQuequan());
-                Cell cell6 = row.createCell(5);
-                cell6.setCellValue(i.getSdt());
-                Cell cell7 = row.createCell(6);
-                cell7.setCellValue(i.getGmail());
-                Cell cell8 = row.createCell(7);
-                cell8.setCellValue(i.getMalop());
-                Cell cell9 = row.createCell(8);
-                cell9.setCellValue(i.getCongno());
-            }
+
             try {
                 FileOutputStream outputStream = new FileOutputStream("Danh-sach-sinh-vien-theo-khoa.xlsx");
                 workbook.write(outputStream);
