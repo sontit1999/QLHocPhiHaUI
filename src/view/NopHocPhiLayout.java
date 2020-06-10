@@ -6,6 +6,14 @@
 package view;
 
 import database.Connect;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,11 +24,32 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
     /**
      * Creates new form NopHocPhiLayout
      */
-    
     Connect conn = new Connect();
+
     public NopHocPhiLayout() {
-        setSize(1000, 450);
+        setSize(1000, 1000);
         initComponents();
+    }
+
+    String getDateNow() {
+        Date today = new Date();
+        DateFormat da = new SimpleDateFormat("dd/MM/yyyy");
+        String dat = da.format(today);
+        return dat;
+    }
+
+    //return the new mahoadon to into datebase
+    int createKeyMahd() {
+        ResultSet rs = conn.queryData("select max(mahd) from hoadon");
+        try {
+            if (rs.next()) {
+                int key = rs.getInt("max(mahd)");
+                return key + 5;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NopHocPhiLayout.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 1;
     }
 
     /**
@@ -37,11 +66,13 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
         btnNop = new javax.swing.JButton();
         txtMsv = new javax.swing.JTextField();
         txtSoTien = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtKiHoc = new javax.swing.JTextField();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Mã sinh viên : ");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Số tiền đóng : ");
 
         btnNop.setBackground(new java.awt.Color(255, 255, 51));
@@ -53,9 +84,14 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
             }
         });
 
-        txtMsv.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        txtMsv.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        txtSoTien.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        txtSoTien.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("Kì học :");
+
+        txtKiHoc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -67,47 +103,76 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
                         .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(65, 65, 65)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtMsv, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                            .addComponent(txtSoTien)))
+                            .addComponent(txtSoTien)
+                            .addComponent(txtKiHoc)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(198, 198, 198)
+                        .addGap(168, 168, 168)
                         .addComponent(btnNop, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtMsv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtSoTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(jLabel2)))
-                .addGap(79, 79, 79)
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMsv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtSoTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtKiHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(48, 48, 48)
                 .addComponent(btnNop, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNopActionPerformed
-        String msv = txtMsv.getText();
+        String masv = txtMsv.getText();
         String sotien = txtSoTien.getText();
-        conn.UpdateData("update sinhvien set congno = congno + "+sotien + " where masv = " + msv);
-    }//GEN-LAST:event_btnNopActionPerformed
+        String kihoc = txtKiHoc.getText();
+        ResultSet rs = conn.queryData("select * from sinhvien where masv = " + masv);
+        if (masv.equals("") || sotien.equals("") || kihoc.equals("")) {
+            JOptionPane.showMessageDialog(txtSoTien, "Không được để trống");
+        } else {
+            try {
+                if (!rs.next()) {
+                    JOptionPane.showMessageDialog(txtSoTien, "Mã sinh viên không tồn tại");
+                } else {
+                    int Mahd = createKeyMahd();
+                    System.out.println(Mahd + "----");
+                    String ngay = getDateNow();
+                    String sql = "insert into hoadon values(" + Mahd + "," + masv + "," + sotien + ",'" + ngay + "'," + kihoc + ")";
+                    System.out.println(sql);
+                    int check = conn.UpdateData(sql);
+                    if (check == 1) {
+                        JOptionPane.showMessageDialog(txtSoTien, "Thêm hoá đơn thành công");
+                    } else {
+                        JOptionPane.showMessageDialog(txtSoTien, "Không thể thêm hoá đơn");
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(NopHocPhiLayout.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
+    }//GEN-LAST:event_btnNopActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNop;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField txtKiHoc;
     private javax.swing.JTextField txtMsv;
     private javax.swing.JTextField txtSoTien;
     // End of variables declaration//GEN-END:variables

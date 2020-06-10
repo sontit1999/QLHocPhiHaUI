@@ -12,27 +12,27 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author Son tit
  */
 public class DsSinhVienLayout extends javax.swing.JPanel {
+
     SinhVienController svController;
     Connect connect = new Connect();
     int malopsvmuonxoa;
+
     /**
      * Creates new form DsSinhVienLayout
      */
     public DsSinhVienLayout() {
-        setSize(1000,450);
+        setSize(1000, 450);
         initComponents();
-        svController= new SinhVienController();
+        svController = new SinhVienController();
         svController.getSV(txtMasv.getText(), tableSinhVien);
-       
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -154,44 +154,44 @@ public class DsSinhVienLayout extends javax.swing.JPanel {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
         String masv = txtMasv.getText().trim();
-        
-        if(masv.equals("")){
+
+        if (masv.equals("")) {
             JOptionPane.showMessageDialog(btnXoa, "Masv không được bỏ trống!");
-        }else{
-            int malop = -1 ;
-               ResultSet result = connect.queryData("SELECT * FROM `sinhvien` WHERE masv = " + masv);
-               
-                try {
-                    while(result.next()){
-                        malop = result.getInt("malop");
-                        
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(DsSinhVienLayout.class.getName()).log(Level.SEVERE, null, ex);
-             }
-            if(svController.deleteSV(masv)==1){
-               JOptionPane.showMessageDialog(btnTimKiem, "Xóa thành công!");
-               updateDSSV();
-          
-               connect.UpdateData("UPDATE lophoc SET sosv = ((SELECT sosv FROM lophoc WHERE malop = " + malop +") - 1 ) where malop = " + malop);
-            }else{
-               JOptionPane.showMessageDialog(btnTimKiem, "Xóa không thành công!Thử lại sau");
+        } else {
+            int malop = -1;
+            ResultSet result = connect.queryData("SELECT * FROM `sinhvien` WHERE masv = " + masv);
+
+            try {
+                while (result.next()) {
+                    malop = result.getInt("malop");
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DsSinhVienLayout.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (svController.deleteSV(masv) == 1) {
+                JOptionPane.showMessageDialog(btnTimKiem, "Xóa thành công!");
+                updateDSSV();
+
+                connect.UpdateData("UPDATE lophoc SET sosv = ((SELECT sosv FROM lophoc WHERE malop = " + malop + ") - 1 ) where malop = " + malop);
+            } else {
+                JOptionPane.showMessageDialog(btnTimKiem, "Xóa không thành công!Thử lại sau");
             }
         }
     }//GEN-LAST:event_btnXoaActionPerformed
-    public void updateDSSV(){
-         svController.getSV("", tableSinhVien);
+    public void updateDSSV() {
+        svController.getSV("", tableSinhVien);
     }
     private void tableSinhVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSinhVienMouseClicked
         // TODO add your handling code here:
         int column = 0;
         int row = tableSinhVien.getSelectedRow();
-        if(row>=0){
+        if (row >= 0) {
             String value = tableSinhVien.getModel().getValueAt(row, column).toString();
             txtMasv.setText(value);
             malopsvmuonxoa = Integer.parseInt(tableSinhVien.getModel().getValueAt(row, 7).toString());
         }
-        
+
     }//GEN-LAST:event_tableSinhVienMouseClicked
 
 

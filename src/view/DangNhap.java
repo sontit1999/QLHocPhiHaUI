@@ -121,7 +121,7 @@ public class DangNhap extends javax.swing.JFrame {
         tk = txtTaikhoan.getText().trim();
         String pass = txtMk.getText().trim();
         if (tk.equals("") || pass.equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Không dc bỏ trống!");
+            JOptionPane.showMessageDialog(rootPane, "Không được bỏ trống!");
         } else {
             ResultSet result = con.queryData("SELECT * FROM sinhvien WHERE masv = '" + tk + "' AND password = '" + pass + "'");
             try {

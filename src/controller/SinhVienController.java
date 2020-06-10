@@ -6,11 +6,8 @@
 package controller;
 
 import database.Connect;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.SinhVien;
-import utils.Constant;
 
 /**
  *
@@ -41,14 +37,14 @@ public class SinhVienController {
     }
 
     public int deleteSV(String masv) {
-         String sqlDelete = "delete from sinhvien where masv = " + masv;
-         if(connect.UpdateData(sqlDelete)==1){
-             return 1;
-         }else{
-              return 0;
-         }    
+        String sqlDelete = "delete from sinhvien where masv = " + masv;
+        if (connect.UpdateData(sqlDelete) == 1) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
-  
+
     public void getSV(String masv, JTable table) {
         masv = masv.trim();
         List<SinhVien> list = new ArrayList<>();
@@ -74,21 +70,20 @@ public class SinhVienController {
                 model.addRow(row);
 
             }
-        }else{
-             boolean have = false;
-             for (SinhVien i : list) {
-                if(masv.equalsIgnoreCase(i.getMasv())){
-                     Object[] row = {i.getMasv(), i.getHoten(), i.getNgaysinh(), i.getGioitinh(), i.getQuequan(), i.getSdt(), i.getGmail(), i.getMalop(), i.getCongno()};
-                     model.addRow(row);
-                     have = true;
-                     break;
+        } else {
+            boolean have = false;
+            for (SinhVien i : list) {
+                if (masv.equalsIgnoreCase(i.getMasv())) {
+                    Object[] row = {i.getMasv(), i.getHoten(), i.getNgaysinh(), i.getGioitinh(), i.getQuequan(), i.getSdt(), i.getGmail(), i.getMalop(), i.getCongno()};
+                    model.addRow(row);
+                    have = true;
+                    break;
                 }
-               
+
             }
-            if(!have){
-             JOptionPane.showMessageDialog(table, " Không tìm thấy  sinh viên có mã " + masv);
+            if (!have) {
+                JOptionPane.showMessageDialog(table, " Không tìm thấy  sinh viên có mã " + masv);
             }
         }
-
     }
 }

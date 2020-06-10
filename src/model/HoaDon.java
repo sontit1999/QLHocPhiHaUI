@@ -10,19 +10,19 @@ package model;
  * @author quyen
  */
 public class HoaDon {
+
     private String maHD;
     private String masv;
     private String soTienNop;
     private String hocKi;
+    private String ngayNop;
 
-    public HoaDon() {
+    public String getNgayNop() {
+        return ngayNop;
     }
 
-    public HoaDon(String maHD, String masv, String soTienNop, String hocKi) {
-        this.maHD = maHD;
-        this.masv = masv;
-        this.soTienNop = soTienNop;
-        this.hocKi = hocKi;
+    public void setNgayNop(String ngayNop) {
+        this.ngayNop = ngayNop;
     }
 
     public String getMaHD() {
@@ -56,5 +56,16 @@ public class HoaDon {
     public void setHocKi(String hocKi) {
         this.hocKi = hocKi;
     }
-    
+
+    public HoaDon() {
+    }
+
+    public HoaDon(String maHD, String masv, String soTienNop, String hocKi, String ngayNop) {
+        this.maHD = maHD;
+        this.masv = masv;
+        this.soTienNop = soTienNop;
+        this.hocKi = hocKi;
+        this.ngayNop = ngayNop;
+    }
+
 }
