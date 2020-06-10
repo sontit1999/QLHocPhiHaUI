@@ -17,6 +17,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import model.SinhVien;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -80,7 +87,7 @@ public class XuatBaoCaoLayout extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(bangbaocao);
 
-        cbChoose.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất Cả", "Chưa hoàn thành", " " }));
+        cbChoose.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất Cả", "Chưa hoàn thành", "" }));
         cbChoose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbChooseActionPerformed(evt);
@@ -137,7 +144,114 @@ public class XuatBaoCaoLayout extends javax.swing.JPanel {
     }//GEN-LAST:event_cbChooseActionPerformed
 
     private void btnXuatbaocaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatbaocaoActionPerformed
-        // TODO add your handling code here:
+        cbChoose.getSelectedItem();
+
+        if (cbChoose.getSelectedItem().toString().equals("Chưa hoàn thành")) {
+            System.out.println("Create file excel");
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Customer_Info");
+            int rowNum = 0;
+            Row firstRow = sheet.createRow(rowNum++);
+            Cell firstCell = firstRow.createCell(0);
+            firstCell.setCellValue("DANH SÁCH SINH VIÊN");
+            List<SinhVien> list = new ArrayList<>();
+            ResultSet resultset = connect.queryData("SELECT * FROM sinhvien WHERE congno<0 AND sinhvien.malop in ( SELECT malop from lophoc WHERE lophoc.sosv>0 )");
+            try {
+                while (resultset.next()) {
+
+                    SinhVien sv = new SinhVien(resultset.getString("masv"), resultset.getString("hoten"), resultset.getString("ngaysinh"), resultset.getString("gioitinh"), resultset.getString("quequan"), resultset.getString("sdt"), resultset.getString("gmail"), resultset.getString("malop"), resultset.getInt("congno") + "");
+                    list.add(sv);
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SinhVienController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            for (SinhVien i : list) {
+                Row row = sheet.createRow(rowNum++);
+                Cell cell1 = row.createCell(0);
+                cell1.setCellValue(i.getMasv());
+                Cell cell2 = row.createCell(1);
+                cell2.setCellValue(i.getHoten());
+                Cell cell3 = row.createCell(2);
+                cell3.setCellValue(i.getNgaysinh());
+                Cell cell4 = row.createCell(3);
+                cell4.setCellValue(i.getGioitinh());
+                Cell cell5 = row.createCell(4);
+                cell5.setCellValue(i.getQuequan());
+                Cell cell6 = row.createCell(5);
+                cell6.setCellValue(i.getSdt());
+                Cell cell7 = row.createCell(6);
+                cell7.setCellValue(i.getGmail());
+                Cell cell8 = row.createCell(7);
+                cell8.setCellValue(i.getMalop());
+                Cell cell9 = row.createCell(8);
+                cell9.setCellValue(i.getCongno());
+            }
+            try {
+                FileOutputStream outputStream = new FileOutputStream("Danh-sach-sinh-vien-theo-lop.xlsx");
+                workbook.write(outputStream);
+                workbook.close();
+            } catch (FileNotFoundException e) {
+            } catch (IOException e) {
+            }
+            System.out.println("Done");
+        } else {
+            System.out.println("Create file excel");
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Customer_Info");
+            int rowNum = 0;
+            Row firstRow = sheet.createRow(rowNum++);
+            Cell firstCell = firstRow.createCell(0);
+            firstCell.setCellValue("DANH SÁCH SINH VIÊN");
+            List<SinhVien> list = new ArrayList<>();
+            String[] makhoa = new String[]{"CNH", "CK", "CNM", "CNOTO", "CNTT", "DT", "KT", "NN", "QLKD"};
+            for (String khoa : makhoa) {
+
+                ResultSet resultset = connect.queryData("SELECT * FROM sinhvien WHERE sinhvien.malop in ( SELECT malop from lophoc WHERE lophoc.makhoa ='" + khoa + "' )");
+                try {
+                    while (resultset.next()) {
+
+                        SinhVien sv = new SinhVien(resultset.getString("masv"), resultset.getString("hoten"), resultset.getString("ngaysinh"), resultset.getString("gioitinh"), resultset.getString("quequan"), resultset.getString("sdt"), resultset.getString("gmail"), resultset.getString("malop"), resultset.getInt("congno") + "");
+                        list.add(sv);
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SinhVienController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+            for (SinhVien i : list) {
+                Row row = sheet.createRow(rowNum++);
+                Cell cell1 = row.createCell(0);
+                cell1.setCellValue(i.getMasv());
+                Cell cell2 = row.createCell(1);
+                cell2.setCellValue(i.getHoten());
+                Cell cell3 = row.createCell(2);
+                cell3.setCellValue(i.getNgaysinh());
+                Cell cell4 = row.createCell(3);
+                cell4.setCellValue(i.getGioitinh());
+                Cell cell5 = row.createCell(4);
+                cell5.setCellValue(i.getQuequan());
+                Cell cell6 = row.createCell(5);
+                cell6.setCellValue(i.getSdt());
+                Cell cell7 = row.createCell(6);
+                cell7.setCellValue(i.getGmail());
+                Cell cell8 = row.createCell(7);
+                cell8.setCellValue(i.getMalop());
+                Cell cell9 = row.createCell(8);
+                cell9.setCellValue(i.getCongno());
+            }
+            try {
+                FileOutputStream outputStream = new FileOutputStream("Danh-sach-sinh-vien-theo-khoa.xlsx");
+                workbook.write(outputStream);
+                workbook.close();
+            } catch (FileNotFoundException e) {
+            } catch (IOException e) {
+            }
+            System.out.println("Done");
+        }
+
+
     }//GEN-LAST:event_btnXuatbaocaoActionPerformed
 
 
@@ -156,7 +270,7 @@ public class XuatBaoCaoLayout extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) bangbaocao.getModel();
             model.setRowCount(0);
             // truy vấn database và thêm vài list
-            ResultSet resultset = connect.queryData("select * from sinhvien where congno < 0");
+            ResultSet resultset = connect.queryData("SELECT * FROM sinhvien WHERE congno<0 AND sinhvien.malop in ( SELECT malop from lophoc WHERE lophoc.sosv>0 )");
             try {
                 while (resultset.next()) {
 
@@ -180,16 +294,21 @@ public class XuatBaoCaoLayout extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) bangbaocao.getModel();
             model.setRowCount(0);
             // truy vấn database và thêm vài list
-            ResultSet resultset = connect.queryData("select * from sinhvien");
-            try {
-                while (resultset.next()) {
+            String[] makhoa = new String[]{"CNH", "CK", "CNM", "CNOTO", "CNTT", "DT", "KT", "NN", "QLKD"};
+            for (String khoa : makhoa) {
 
-                    SinhVien sv = new SinhVien(resultset.getString("masv"), resultset.getString("hoten"), resultset.getString("ngaysinh"), resultset.getString("gioitinh"), resultset.getString("quequan"), resultset.getString("sdt"), resultset.getString("gmail"), resultset.getString("malop"), resultset.getInt("congno") + "");
-                    list.add(sv);
+                ResultSet resultset = connect.queryData("SELECT * FROM sinhvien WHERE sinhvien.malop in ( SELECT malop from lophoc WHERE lophoc.makhoa ='" + khoa + "' )");
+                try {
+                    while (resultset.next()) {
 
+                        SinhVien sv = new SinhVien(resultset.getString("masv"), resultset.getString("hoten"), resultset.getString("ngaysinh"), resultset.getString("gioitinh"), resultset.getString("quequan"), resultset.getString("sdt"), resultset.getString("gmail"), resultset.getString("malop"), resultset.getInt("congno") + "");
+                        list.add(sv);
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SinhVienController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(SinhVienController.class.getName()).log(Level.SEVERE, null, ex);
+
             }
             // thêm sv từ list vào bảng
             for (SinhVien i : list) {
