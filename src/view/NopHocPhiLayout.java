@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import controller.*;
+import java.text.NumberFormat;
 
 /**
  *
@@ -25,10 +27,12 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
      * Creates new form NopHocPhiLayout
      */
     Connect conn = new Connect();
+    HoaDonController hdcon = new HoaDonController();
 
     public NopHocPhiLayout() {
         setSize(1000, 1000);
         initComponents();
+        hdcon.hienThiHD(jTable1, "select * from hoadon");
     }
 
     String getDateNow() {
@@ -68,12 +72,19 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
         txtSoTien = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtKiHoc = new javax.swing.JTextField();
+        btn_timkiem = new javax.swing.JButton();
+        tbl_hoadon = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Mã sinh viên : ");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 16, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Số tiền đóng : ");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 62, 130, -1));
 
         btnNop.setBackground(new java.awt.Color(255, 255, 51));
         btnNop.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -83,57 +94,45 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
                 btnNopActionPerformed(evt);
             }
         });
+        add(btnNop, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 165, 92, -1));
 
         txtMsv.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        add(txtMsv, new org.netbeans.lib.awtextra.AbsoluteConstraints(238, 13, 223, -1));
 
         txtSoTien.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        add(txtSoTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(238, 59, 223, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Kì học :");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 108, 130, -1));
 
         txtKiHoc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        add(txtKiHoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(238, 105, 223, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(65, 65, 65)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMsv, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                            .addComponent(txtSoTien)
-                            .addComponent(txtKiHoc)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(168, 168, 168)
-                        .addComponent(btnNop, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(123, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMsv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtSoTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtKiHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
-                .addComponent(btnNop, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(142, Short.MAX_VALUE))
-        );
+        btn_timkiem.setBackground(new java.awt.Color(255, 255, 51));
+        btn_timkiem.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        btn_timkiem.setText("Tìm kiếm");
+        btn_timkiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_timkiemActionPerformed(evt);
+            }
+        });
+        add(btn_timkiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(311, 165, 171, -1));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tbl_hoadon.setViewportView(jTable1);
+
+        add(tbl_hoadon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, 130));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNopActionPerformed
@@ -164,14 +163,25 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
                 Logger.getLogger(NopHocPhiLayout.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        hdcon.hienThiHD(jTable1, "select * from hoadon");
     }//GEN-LAST:event_btnNopActionPerformed
+
+    private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
+        String masv = txtMsv.getText();
+        if (masv.equals("")) {
+            JOptionPane.showMessageDialog(txtSoTien, "Không được để trống mã sinh viên !");
+        }
+        hdcon.hienThiHD(jTable1, "select * from hoadon where masv = " + masv);
+    }//GEN-LAST:event_btn_timkiemActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNop;
+    private javax.swing.JButton btn_timkiem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane tbl_hoadon;
     private javax.swing.JTextField txtKiHoc;
     private javax.swing.JTextField txtMsv;
     private javax.swing.JTextField txtSoTien;

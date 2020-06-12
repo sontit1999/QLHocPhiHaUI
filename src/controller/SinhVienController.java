@@ -24,10 +24,6 @@ import model.SinhVien;
 public class SinhVienController {
 
     Connect connect = new Connect();
-    public static String USERNAME = "root";
-    public static String PASSWORD = "";
-    public static String DATABASEURL = "jdbc:mysql://localhost:3306/thuhocphisv";
-    public static String jdbcDriver = "com.mysql.cj.jdbc.Driver";
 
     public SinhVienController() {
     }
@@ -38,11 +34,7 @@ public class SinhVienController {
 
     public int deleteSV(String masv) {
         String sqlDelete = "delete from sinhvien where masv = " + masv;
-        if (connect.UpdateData(sqlDelete) == 1) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return connect.UpdateData(sqlDelete);
     }
 
     public void getSV(String masv, JTable table) {
@@ -51,14 +43,12 @@ public class SinhVienController {
         list.clear();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
-
+        
         ResultSet resultset = connect.queryData("select * from sinhvien");
         try {
             while (resultset.next()) {
-
                 SinhVien sv = new SinhVien(resultset.getString("masv"), resultset.getString("hoten"), resultset.getString("ngaysinh"), resultset.getString("gioitinh"), resultset.getString("quequan"), resultset.getString("sdt"), resultset.getString("gmail"), resultset.getString("malop"), resultset.getInt("congno") + "");
                 list.add(sv);
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(SinhVienController.class.getName()).log(Level.SEVERE, null, ex);
