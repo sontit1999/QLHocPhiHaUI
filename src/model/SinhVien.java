@@ -10,6 +10,7 @@ package model;
  * @author quyen
  */
 public class SinhVien {
+
     private String masv;
     private String hoten;
     private String ngaysinh;
@@ -23,7 +24,7 @@ public class SinhVien {
     public SinhVien() {
     }
 
-    public SinhVien(String masv, String hoten, String ngaysinh,String gioitinh, String quequan, String sdt, String gmail, String malop, String congno) {
+    public SinhVien(String masv, String hoten, String ngaysinh, String gioitinh, String quequan, String sdt, String gmail, String malop, String congno) {
         this.masv = masv;
         this.hoten = hoten;
         this.ngaysinh = ngaysinh;
@@ -106,5 +107,5 @@ public class SinhVien {
     public void setCongno(String congno) {
         this.congno = congno;
     }
-    
+
 }

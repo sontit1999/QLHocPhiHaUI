@@ -5,7 +5,6 @@
  */
 package view;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import controller.SinhVienController;
 import database.Connect;
 import java.sql.ResultSet;
@@ -13,7 +12,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.SinhVien;
-import view.DangNhap;
 
 /**
  *

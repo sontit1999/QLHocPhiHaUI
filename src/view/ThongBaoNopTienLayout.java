@@ -7,7 +7,6 @@ package view;
 
 import database.Connect;
 import javax.swing.JOptionPane;
-import java.text.DecimalFormat;
 
 /**
  *
