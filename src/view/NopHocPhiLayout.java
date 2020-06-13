@@ -76,15 +76,11 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
         tbl_hoadon = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Mã sinh viên : ");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 16, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Số tiền đóng : ");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 62, 130, -1));
 
         btnNop.setBackground(new java.awt.Color(255, 255, 51));
         btnNop.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -94,20 +90,15 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
                 btnNopActionPerformed(evt);
             }
         });
-        add(btnNop, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 165, 92, -1));
 
         txtMsv.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(txtMsv, new org.netbeans.lib.awtextra.AbsoluteConstraints(238, 13, 223, -1));
 
         txtSoTien.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(txtSoTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(238, 59, 223, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Kì học :");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 108, 130, -1));
 
         txtKiHoc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(txtKiHoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(238, 105, 223, -1));
 
         btn_timkiem.setBackground(new java.awt.Color(255, 255, 51));
         btn_timkiem.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -117,7 +108,6 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
                 btn_timkiemActionPerformed(evt);
             }
         });
-        add(btn_timkiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(311, 165, 171, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -132,7 +122,62 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
         ));
         tbl_hoadon.setViewportView(jTable1);
 
-        add(tbl_hoadon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, 130));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jLabel1)
+                .addGap(65, 65, 65)
+                .addComponent(txtMsv, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(txtSoTien, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(txtKiHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(95, 95, 95)
+                .addComponent(btnNop, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(124, 124, 124)
+                .addComponent(btn_timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(tbl_hoadon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel1))
+                    .addComponent(txtMsv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel2))
+                    .addComponent(txtSoTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel3))
+                    .addComponent(txtKiHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnNop)
+                    .addComponent(btn_timkiem))
+                .addGap(28, 28, 28)
+                .addComponent(tbl_hoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNopActionPerformed
