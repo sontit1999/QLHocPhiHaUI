@@ -120,7 +120,6 @@ public class HomeLayout extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Phần mềm quản lý học phí sinh viên HaUI");
-        setPreferredSize(new java.awt.Dimension(1000, 450));
 
         jPanelMenu.setBackground(new java.awt.Color(0, 153, 153));
         jPanelMenu.setPreferredSize(new java.awt.Dimension(250, 420));

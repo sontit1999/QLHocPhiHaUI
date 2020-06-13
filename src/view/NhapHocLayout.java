@@ -5,6 +5,7 @@
  */
 package view;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.StringStack;
 import database.Connect;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import model.SinhVien;
 
 /**
  *
@@ -219,23 +221,25 @@ public class NhapHocLayout extends javax.swing.JPanel {
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         // TODO add your handling code here:
-        if (txtHoten.getText().trim().equals("") || txtNgaySinh.getText().trim().equals("") || txtQueQuan.getText().trim().equals("") || txtSdt.getText().trim().equals("") || txtGmail.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(txtHoten, "Không được bỏ trống trường nào !!!");
-        } else {
+        if (txtHoten.getText().trim().equals("") || txtNgaySinh.getText().trim().equals("") || txtQueQuan.getText().trim().equals("")  || txtSdt.getText().trim().equals("") || txtGmail.getText().trim().equals("") ) {
+            JOptionPane.showMessageDialog(txtHoten, "Không được bỏ trống trường nào !!!");          
+        }else{
             int malop = -1;
             switch (cbKhoa.getSelectedIndex()) {
-                case 0: {
-                    ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CK' AND sosv<70);");
-                    try {
-                        while (resultSet.next()) {
-                            malop = resultSet.getInt("malop");
-                        }
+                case 0:
+                   
+                     {
+                        ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CK' AND sosv<70);");
+                        try {
+                            while (resultSet.next()) {
+                                malop = resultSet.getInt("malop");
+                            }
 
-                    } catch (SQLException ex) {
-                        Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(NhapHocLayout.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
-                }
-                break;
+                    break;
 
                 case 1: {
                     ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CNH' AND sosv<70);");
@@ -253,7 +257,7 @@ public class NhapHocLayout extends javax.swing.JPanel {
                     ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CNM' AND sosv<70);");
                     try {
                         while (resultSet.next()) {
-                            malop = resultSet.getInt("malop");
+                           malop = resultSet.getInt("malop");
                         }
 
                     } catch (SQLException ex) {
@@ -265,7 +269,7 @@ public class NhapHocLayout extends javax.swing.JPanel {
                     ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'CNOTO' AND sosv<70);");
                     try {
                         while (resultSet.next()) {
-                            malop = resultSet.getInt("malop");
+                           malop = resultSet.getInt("malop");
                         }
 
                     } catch (SQLException ex) {
@@ -289,7 +293,7 @@ public class NhapHocLayout extends javax.swing.JPanel {
                     ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'DT' AND sosv<70);");
                     try {
                         while (resultSet.next()) {
-                            malop = resultSet.getInt("malop");
+                             malop = resultSet.getInt("malop");
                         }
 
                     } catch (SQLException ex) {
@@ -301,7 +305,7 @@ public class NhapHocLayout extends javax.swing.JPanel {
                     ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'KT' AND sosv<70);");
                     try {
                         while (resultSet.next()) {
-                            malop = resultSet.getInt("malop");
+                             malop = resultSet.getInt("malop");
                         }
 
                     } catch (SQLException ex) {
@@ -313,7 +317,7 @@ public class NhapHocLayout extends javax.swing.JPanel {
                     ResultSet resultSet = connect.queryData("select malop from lophoc where malop = (select min(malop) from lophoc WHERE makhoa = 'NN' AND sosv<70);");
                     try {
                         while (resultSet.next()) {
-                            malop = resultSet.getInt("malop");
+                             malop = resultSet.getInt("malop");
                         }
 
                     } catch (SQLException ex) {
@@ -341,19 +345,26 @@ public class NhapHocLayout extends javax.swing.JPanel {
                 gioitinh = "Nữ";
             }
             // init default pass
-            String password = txtHoten.getText().split("\\s+")[txtHoten.getText().trim().split("\\s+").length - 1] + "2020";
+            String password = txtHoten.getText().split("\\s+")[txtHoten.getText().trim().split("\\s+").length-1] + "2020";
             String sqlAddSV = "INSERT INTO `sinhvien` (`password`, `hoten`, `ngaysinh`, `gioitinh`, `quequan`, `sdt`, `gmail`, `malop`, `congno`) VALUES ( '" + password + "','" + txtHoten.getText() + "', '" + txtNgaySinh.getText() + "', '" + gioitinh + "', '" + txtQueQuan.getText() + "', '" + txtSdt.getText() + "', '" + txtGmail.getText() + "', '" + malop + "', '0');";
-            if (connect.UpdateData(sqlAddSV) == 1) {
-                JOptionPane.showMessageDialog(txtHoten, "Thành công!");
-                connect.UpdateData("UPDATE lophoc SET sosv = ((SELECT sosv FROM lophoc WHERE malop = " + malop + ") + 1 ) where malop = " + malop);
-            } else {
-                JOptionPane.showMessageDialog(txtHoten, "Không thành công ! vui lòng thử lại ");
-            };
+                if (connect.UpdateData(sqlAddSV) == 1) {
+                    JOptionPane.showMessageDialog(txtHoten, "Thành công!");
+                    connect.UpdateData("UPDATE lophoc SET sosv = ((SELECT sosv FROM lophoc WHERE malop = " + malop +") + 1 ) where malop = " + malop);
+                    clearField();
+                } else {
+                    JOptionPane.showMessageDialog(txtHoten, "Không thành công ! vui lòng thử lại ");
+                };
         }
 
 
     }//GEN-LAST:event_btnXacNhanActionPerformed
-
+    public void clearField(){
+       txtHoten.setText("");
+       txtGmail.setText("");
+       txtNgaySinh.setText("");
+       txtQueQuan.setText("");
+       txtSdt.setText("");
+    }
     private void rbNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNamActionPerformed
         // TODO add your handling code here:
         rBnu.setSelected(false);
