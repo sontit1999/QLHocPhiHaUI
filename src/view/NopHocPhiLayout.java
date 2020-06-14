@@ -198,10 +198,12 @@ public class NopHocPhiLayout extends javax.swing.JPanel {
                     String sql = "insert into hoadon values(" + Mahd + "," + masv + "," + sotien + ",'" + ngay + "'," + kihoc + ")";
                     System.out.println(sql);
                     int check = conn.UpdateData(sql);
-                    if (check == 1) {
-                        JOptionPane.showMessageDialog(txtSoTien, "Thêm hoá đơn thành công");
+                    String sqlUpdateCongno = "UPDATE sinhvien SET congno = congno + "+sotien+" WHERE masv = " + masv;
+                    int check1 = conn.UpdateData(sqlUpdateCongno);
+                    if (check == 1 && check1 == 1) {
+                        JOptionPane.showMessageDialog(txtSoTien, "Nộp tiền thành công!");
                     } else {
-                        JOptionPane.showMessageDialog(txtSoTien, "Không thể thêm hoá đơn");
+                        JOptionPane.showMessageDialog(txtSoTien, "Lỗi! kiểm tra lại ");
                     }
                 }
             } catch (SQLException ex) {
