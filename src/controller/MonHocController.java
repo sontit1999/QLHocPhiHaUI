@@ -37,16 +37,15 @@ public class MonHocController {
     public void hienThiMH(JTable tbl, String sql) {
         ResultSet rs = conn.queryData(sql);
         DefaultTableModel model = new DefaultTableModel();
-        String header[] = {"Mã lớp học", "Tên môn học", "Tên giảng viên", "Địa điểm", "số tín"};
+        String header[] = {"Mã lớp học", "Tên môn học", "Số tín", "Số tiền"};
         model.setColumnIdentifiers(header);
         try {
             while (rs.next()) {
                 String row[] = new String[5];
                 row[0] = String.valueOf(rs.getInt("mamh"));
                 row[1] = rs.getString("tenmh");
-                row[2] = rs.getString("tengiangvien");
-                row[3] = rs.getString("diadiem");
-                row[4] = String.valueOf(rs.getInt("sotin"));
+                row[2] = rs.getString("sotin");
+                row[3] = rs.getString("sotien");
                 model.addRow(row);
             }
         } catch (SQLException ex) {

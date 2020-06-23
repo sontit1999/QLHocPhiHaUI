@@ -32,14 +32,14 @@ public class DangKyMonHocLayOut extends javax.swing.JFrame {
         loadDataFromDB();
     }
 
-    String malop, tenmon, tengv, diadiem, sotin;
+    String malop, tenmon, sotin, sotien, ghichu;
 
     void getTxt() {
-        malop = lbmalop.getText();
-        tenmon = lbten.getText();
-        tengv = lbtengv.getText();
-        diadiem = lbdiadiem.getText();
-        sotin = lbsotin.getText();
+        malop = mamh.getText();
+        tenmon = tenmh.getText();
+        sotin = sotinchi.getText();
+        sotien = sotienmon.getText();
+        ghichu = gc.getText();
     }
 
     String getDateNow() {
@@ -72,12 +72,18 @@ public class DangKyMonHocLayOut extends javax.swing.JFrame {
         lbmalop = new javax.swing.JLabel();
         lbten = new javax.swing.JLabel();
         lbsotin = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         lbtengv = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         lbdiadiem = new javax.swing.JLabel();
         jToggleButton1 = new javax.swing.JToggleButton();
         btnHuy = new javax.swing.JButton();
+        mamh = new javax.swing.JLabel();
+        tenmh = new javax.swing.JLabel();
+        sotienmon = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        sotinchi = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        gc = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -111,26 +117,20 @@ public class DangKyMonHocLayOut extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 186, 585, 165));
 
         jLabel1.setText("Mã môn học :");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         jLabel2.setText("Tên môn : ");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 45, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
         jLabel3.setText("Số tín :");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 129, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
         jLabel5.setText("Bảng chọn lớp học :");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 161, -1, -1));
         getContentPane().add(lbmalop, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 20, -1, -1));
         getContentPane().add(lbten, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 45, -1, -1));
         getContentPane().add(lbsotin, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 129, -1, -1));
-
-        jLabel10.setText("Tên giảng viên");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 75, -1, -1));
         getContentPane().add(lbtengv, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 75, -1, -1));
-
-        jLabel12.setText("Địa điểm");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 104, -1, -1));
         getContentPane().add(lbdiadiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 104, -1, -1));
 
         jToggleButton1.setText("Thoát");
@@ -149,38 +149,64 @@ public class DangKyMonHocLayOut extends javax.swing.JFrame {
         });
         getContentPane().add(btnHuy, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 110, 30));
 
+        mamh.setText("-------");
+        getContentPane().add(mamh, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+
+        tenmh.setText("------");
+        getContentPane().add(tenmh, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
+
+        sotienmon.setText("------");
+        getContentPane().add(sotienmon, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, -1, -1));
+
+        jLabel4.setText("Số tiền :");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+
+        sotinchi.setText("------");
+        getContentPane().add(sotinchi, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, -1, -1));
+
+        jLabel6.setText("Ghi chú");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, -1, -1));
+
+        gc.setColumns(20);
+        gc.setRows(5);
+        jScrollPane2.setViewportView(gc);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtbDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbDataMouseClicked
         int row = jtbData.getSelectedRow();
         String[] r = new String[5];
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             r[i] = jtbData.getModel().getValueAt(row, i).toString();
         }
-        lbmalop.setText(r[0]);
-        lbten.setText(r[1]);
-        lbtengv.setText(r[2]);
-        lbdiadiem.setText(r[3]);
-        lbsotin.setText(r[4]);
+        mamh.setText(r[0]);
+        tenmh.setText(r[1]);
+        sotinchi.setText(r[2]);
+        sotienmon.setText(r[3]);
     }//GEN-LAST:event_jtbDataMouseClicked
 
     DangNhapLayOut dn = new DangNhapLayOut();
 
     private void btnDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangKyActionPerformed
         getTxt();
-        String sql = "insert into dangky values (" + dn.tk + ", " + malop + ", '" + getDateNow() + "')";
-        int check1 = conn.UpdateData(sql);
-        ResultSet rs = conn.queryData("select sotin from monhoc where mamh = " + malop);
+        int check1 = 0;
+        ResultSet rs = conn.queryData("select * from dangky where mamh = " + malop + " and masv = " + dn.tk);
         int giatien = 0;
         try {
-            if (rs.next()) {
-                giatien = MonHocController.getInstance().getSoTien() * rs.getInt("sotin");
+            if (!rs.next()) {
+                String sql = "insert into dangky values (" + dn.tk + ", " + malop + ", '" + getDateNow() + "','" + ghichu + "')";
+                check1 = conn.UpdateData(sql);
+                giatien = Integer.valueOf(sotien) * Integer.valueOf(sotin);
+                System.out.println(sotien + "===" + sotin);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DangKyMonHocLayOut.class.getName()).log(Level.SEVERE, null, ex);
         }
-        int check2 = conn.UpdateData("update sinhvien set congno = congno - " + giatien);
+        int check2 = conn.UpdateData("update sinhvien set congno = congno - " + giatien + " where masv  = " + dn.tk);
+
         if (check1 != 0 && check2 != 0) {
             JOptionPane.showMessageDialog(rootPane, "Đăng ký môn học thành công");
         } else {
@@ -197,11 +223,11 @@ public class DangKyMonHocLayOut extends javax.swing.JFrame {
         String sql = "delete from dangky where masv = " + dn.tk + " and mamh =  " + malop;
         System.out.println(sql);
         int check1 = conn.UpdateData(sql);
-        ResultSet rs = conn.queryData("select sotin from monhoc where mamh = " + malop);
+        ResultSet rs = conn.queryData("select * from monhoc where mamh = " + malop);
         int giatien = 0;
         try {
             if (rs.next()) {
-                giatien = MonHocController.getInstance().getSoTien() * rs.getInt("sotin");
+                giatien = rs.getInt("sotien") * rs.getInt("sotin");
             }
         } catch (SQLException ex) {
             Logger.getLogger(DangKyMonHocLayOut.class.getName()).log(Level.SEVERE, null, ex);
@@ -211,6 +237,7 @@ public class DangKyMonHocLayOut extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Huỷ môn học thành công");
         } else {
             JOptionPane.showMessageDialog(rootPane, "Không thể huỷ môn học");
+            conn.UpdateData("update sinhvien set congno = congno - " + giatien);
         }
     }//GEN-LAST:event_btnHuyActionPerformed
 
@@ -252,13 +279,15 @@ public class DangKyMonHocLayOut extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangKy;
     private javax.swing.JButton btnHuy;
+    private javax.swing.JTextArea gc;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTable jtbData;
     private javax.swing.JLabel lbdiadiem;
@@ -266,5 +295,9 @@ public class DangKyMonHocLayOut extends javax.swing.JFrame {
     private javax.swing.JLabel lbsotin;
     private javax.swing.JLabel lbten;
     private javax.swing.JLabel lbtengv;
+    private javax.swing.JLabel mamh;
+    private javax.swing.JLabel sotienmon;
+    private javax.swing.JLabel sotinchi;
+    private javax.swing.JLabel tenmh;
     // End of variables declaration//GEN-END:variables
 }
