@@ -20,19 +20,22 @@ import javax.swing.event.ListSelectionListener;
  * @author Son tit
  */
 public class DsSinhVienLayout extends javax.swing.JPanel {
+
     SinhVienController svController;
     Connect connect = new Connect();
     int malopsvmuonxoa;
+
     /**
      * Creates new form DsSinhVienLayout
      */
     public DsSinhVienLayout() {
-        setSize(1000,450);
+        setSize(1000, 450);
         initComponents();
-        svController= new SinhVienController();
+        svController = new SinhVienController();
         svController.getSV(txtMasv.getText(), tableSinhVien);
-       
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -277,9 +280,9 @@ public class DsSinhVienLayout extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCapnhat, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnHienthi, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addGap(42, 42, 42))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -295,39 +298,39 @@ public class DsSinhVienLayout extends javax.swing.JPanel {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
         String masv = txtMasv.getText().trim();
-        
-        if(masv.equals("")){
+
+        if (masv.equals("")) {
             JOptionPane.showMessageDialog(btnXoa, "Masv không được bỏ trống!");
-        }else{
-            int malop = -1 ;
-               ResultSet result = connect.queryData("SELECT * FROM `sinhvien` WHERE masv = " + masv);
-               
-                try {
-                    while(result.next()){
-                        malop = result.getInt("malop");
-                        
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(DsSinhVienLayout.class.getName()).log(Level.SEVERE, null, ex);
-             }
-            if(svController.deleteSV(masv)==1){
-               JOptionPane.showMessageDialog(btnTimKiem, "Xóa thành công!");
-               updateDSSV();
-          
-               connect.UpdateData("UPDATE lophoc SET sosv = ((SELECT sosv FROM lophoc WHERE malop = " + malop +") - 1 ) where malop = " + malop);
-            }else{
-               JOptionPane.showMessageDialog(btnTimKiem, "Xóa không thành công! Kiểm tra lại mã sinh viên");
+        } else {
+            int malop = -1;
+            ResultSet result = connect.queryData("SELECT * FROM `sinhvien` WHERE masv = " + masv);
+
+            try {
+                while (result.next()) {
+                    malop = result.getInt("malop");
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DsSinhVienLayout.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (svController.deleteSV(masv) == 1) {
+                JOptionPane.showMessageDialog(btnTimKiem, "Xóa thành công!");
+                updateDSSV();
+
+                connect.UpdateData("UPDATE lophoc SET sosv = ((SELECT sosv FROM lophoc WHERE malop = " + malop + ") - 1 ) where malop = " + malop);
+            } else {
+                JOptionPane.showMessageDialog(btnTimKiem, "Xóa không thành công! Kiểm tra lại mã sinh viên");
             }
         }
     }//GEN-LAST:event_btnXoaActionPerformed
-    public void updateDSSV(){
-         svController.getSV("", tableSinhVien);
+    public void updateDSSV() {
+        svController.getSV("", tableSinhVien);
     }
     private void tableSinhVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSinhVienMouseClicked
         // TODO add your handling code here:
-        
+
         int row = tableSinhVien.getSelectedRow();
-        if(row>=0){
+        if (row >= 0) {
             String value = tableSinhVien.getModel().getValueAt(row, 0).toString();
             txtMasv.setText(value);
             txtHoTen.setText(tableSinhVien.getModel().getValueAt(row, 1).toString());
@@ -336,7 +339,7 @@ public class DsSinhVienLayout extends javax.swing.JPanel {
             txtSodt.setText(tableSinhVien.getModel().getValueAt(row, 5).toString());
             txtGmail.setText(tableSinhVien.getModel().getValueAt(row, 6).toString());
         }
-        
+
     }//GEN-LAST:event_tableSinhVienMouseClicked
 
     private void btnCapnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapnhatActionPerformed
@@ -347,18 +350,18 @@ public class DsSinhVienLayout extends javax.swing.JPanel {
         String quequan = txtQueQuan.getText().trim();
         String sdt = txtSodt.getText().trim();
         String gmail = txtGmail.getText().trim();
-        if(masv.equals("") ||hoten.equals("")  || ngaysinh.equals("") || quequan.equals("") || sdt.equals("") || gmail.equals("")){
+        if (masv.equals("") || hoten.equals("") || ngaysinh.equals("") || quequan.equals("") || sdt.equals("") || gmail.equals("")) {
             JOptionPane.showMessageDialog(btnCapnhat, "Không được bỏ trống trường nào !!");
-        }else{
-           String sqlUpdate = "UPDATE sinhvien set hoten = '"+hoten+"' , ngaysinh = '"+ngaysinh+"' , quequan = '"+quequan+"', sdt = '"+sdt+"' , gmail = '"+gmail+"' where masv = '"+masv+"'";
-           if(connect.UpdateData(sqlUpdate)==1){
+        } else {
+            String sqlUpdate = "UPDATE sinhvien set hoten = '" + hoten + "' , ngaysinh = '" + ngaysinh + "' , quequan = '" + quequan + "', sdt = '" + sdt + "' , gmail = '" + gmail + "' where masv = '" + masv + "'";
+            if (connect.UpdateData(sqlUpdate) == 1) {
                 JOptionPane.showMessageDialog(btnCapnhat, "Cập nhật thành công !!");
                 updateDSSV();
-           }else{
-               JOptionPane.showMessageDialog(btnCapnhat, "Cập nhật không thành công !! Kiểm tra lại mã sinh viên");
-           }
+            } else {
+                JOptionPane.showMessageDialog(btnCapnhat, "Cập nhật không thành công !! Kiểm tra lại mã sinh viên");
+            }
         }
-        
+
     }//GEN-LAST:event_btnCapnhatActionPerformed
 
     private void btnHienthiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHienthiActionPerformed
