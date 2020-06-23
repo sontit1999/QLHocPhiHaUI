@@ -16,14 +16,14 @@ import javax.swing.JOptionPane;
  *
  * @author Son tit
  */
-public class DangNhap extends javax.swing.JFrame {
+public class DangNhapLayOut extends javax.swing.JFrame {
 
     Connect con;
 
     /**
      * Creates new form DangNhap
      */
-    public DangNhap() {
+    public DangNhapLayOut() {
         con = new Connect();
         initComponents();
     }
@@ -133,14 +133,14 @@ public class DangNhap extends javax.swing.JFrame {
                 } else if (result.next()) {
                     JOptionPane.showMessageDialog(rootPane, "Đăng nhập sinh viên thành công!");
                     this.setVisible(false);
-                    ThongBaoSinhVienLayOut jpannelThongBaoSinhVien = new ThongBaoSinhVienLayOut();
+                    SinhVienLayOut jpannelThongBaoSinhVien = new SinhVienLayOut();
                     jpannelThongBaoSinhVien.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(rootPane, "Tài khoản hoặc mật khẩu không chính xác!");
                 }
 
             } catch (SQLException ex) {
-                Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DangNhapLayOut.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnDangnhapActionPerformed
@@ -162,20 +162,21 @@ public class DangNhap extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DangNhapLayOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DangNhapLayOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DangNhapLayOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DangNhapLayOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DangNhap().setVisible(true);
+                new DangNhapLayOut().setVisible(true);
             }
         });
     }

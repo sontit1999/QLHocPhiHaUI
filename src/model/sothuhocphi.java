@@ -10,6 +10,7 @@ package model;
  * @author quyen
  */
 public class sothuhocphi {
+
     private String stt;
     private String ky;
     private String namhoc;
@@ -77,6 +78,4 @@ public class sothuhocphi {
         this.noidung = noidung;
     }
 
-    
-    
 }

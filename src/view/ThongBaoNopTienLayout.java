@@ -11,9 +11,7 @@ import database.Connect;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import java.text.DecimalFormat;
 import javax.swing.table.DefaultTableModel;
-import model.SinhVien;
 import model.sothuhocphi;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,10 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -47,10 +41,7 @@ public class ThongBaoNopTienLayout extends javax.swing.JPanel {
         setSize(1000, 450);
         connect = new Connect();
         hienthids();
-    
-        
-        
-     
+
     }
 
     private void hienthids() {
@@ -62,25 +53,19 @@ public class ThongBaoNopTienLayout extends javax.swing.JPanel {
         ResultSet resultset = connect.queryData("select * from sohocphi");
         try {
             while (resultset.next()) {
-
                 sothuhocphi st = new sothuhocphi(resultset.getString("id"), resultset.getString("hocky"), resultset.getString("namhoc"), resultset.getString("ngaybd"), resultset.getString("ngaykt"), resultset.getString("thongbao"));
-                
                 list.add(st);
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(SinhVienController.class.getName()).log(Level.SEVERE, null, ex);
         }
         // thêm sv từ list vào bảng
         for (sothuhocphi i : list) {
-
             Object[] row = {i.getStt(), i.getKy(), i.getNamhoc(), i.getTungay(), i.getDenngay(), i.getNoidung()};
             model.addRow(row);
-
         }
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -275,7 +260,7 @@ public class ThongBaoNopTienLayout extends javax.swing.JPanel {
                 .addGap(626, 626, 626))
         );
     }// </editor-fold>//GEN-END:initComponents
-  
+
     private void resetform() {
         txtso.setText("");
         txtky.setText("");
@@ -293,14 +278,14 @@ public class ThongBaoNopTienLayout extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Dữ liệu không được để trống",
                     "Thông báo", JOptionPane.WARNING_MESSAGE);
         } else {
-            String sqlthongbao = " INSERT INTO `sohocphi` (`id`, `hocky`, `namhoc`, `ngaybd`, `ngaykt`, `thongbao`) VALUES ('"+txtso.getText()+"', '"+txtky.getText()+"', '"+txtnamhoc.getText()+"', '"+txttungay.getText()+"', '"+txtdenngay.getText()+"', '"+txtthongbao.getText()+"');";
+            String sqlthongbao = " INSERT INTO `sohocphi` (`id`, `hocky`, `namhoc`, `ngaybd`, `ngaykt`, `thongbao`) VALUES ('" + txtso.getText() + "', '" + txtky.getText() + "', '" + txtnamhoc.getText() + "', '" + txttungay.getText() + "', '" + txtdenngay.getText() + "', '" + txtthongbao.getText() + "');";
             if (connect.UpdateData(sqlthongbao) == 1) {
                 JOptionPane.showMessageDialog(jButton1, "thành công");
 
             } else {
                 JOptionPane.showMessageDialog(jButton1, "không thành công");
 
-            };            
+            };
             resetform();
             hienthids();
         }
@@ -370,38 +355,38 @@ public class ThongBaoNopTienLayout extends javax.swing.JPanel {
 
     private void btnxuatthongbaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxuatthongbaoActionPerformed
         // Create Blank document
-    XWPFDocument document = new XWPFDocument();
-    // Create new Paragraph
-    XWPFParagraph paragraph1 = document.createParagraph();
-    XWPFRun run = paragraph1.createRun(); 
-    run.setText("          BỘ CÔNG THƯƠNG                                Cộng hòa xã hội chủ nghĩa Việt Nam");
-    
-    XWPFParagraph paragraph2 = document.createParagraph();
-    run = paragraph2.createRun();
-    run.setText("TRƯỜNG ĐH CÔNG NGHIỆP HÀ NỘI                       Độc lập- Tự do- Hạnh phúc ");
-    XWPFParagraph paragraph3 = document.createParagraph();
-    run = paragraph3.createRun();
-    run.setText("    Thông báo số:"+txtso.getText()+"                         Hà Nội, ngày "+txttungay.getText()+" ");
-    XWPFParagraph paragraph4 = document.createParagraph();
-    run = paragraph4.createRun();
-    run.setText("                                       ----THÔNG BÁO---                          ");
-    XWPFParagraph paragraph5 = document.createParagraph();
-    run = paragraph5.createRun();
-    run.setText(" Trường DDH CNHN thông báo đến sinh viên toàn trường  nộp học phí kỳ: "+txtky.getText()+" năm học: "+txtnamhoc.getText()+" nội dung như sau:"+txtthongbao.getText()+"  ");
-    XWPFParagraph paragraph6 = document.createParagraph();
-    run = paragraph6.createRun();
-    run.setText(" Thời gian nộp học phí từ ngày:"+txttungay.getText()+"           đến ngày "+txtdenngay.getText()+" ");
-    XWPFParagraph paragraph7 = document.createParagraph();
-    run = paragraph7.createRun();
-    run.setText(" Nơi nhận                                                          Hiệu trưởng ");
-    XWPFParagraph paragraph8 = document.createParagraph();
-    run = paragraph8.createRun();
-    run.setText(" -các phòng ban ");
-    
-    // Write the Document in file system
-    FileOutputStream out = null;
+        XWPFDocument document = new XWPFDocument();
+        // Create new Paragraph
+        XWPFParagraph paragraph1 = document.createParagraph();
+        XWPFRun run = paragraph1.createRun();
+        run.setText("          BỘ CÔNG THƯƠNG                                Cộng hòa xã hội chủ nghĩa Việt Nam");
+
+        XWPFParagraph paragraph2 = document.createParagraph();
+        run = paragraph2.createRun();
+        run.setText("TRƯỜNG ĐH CÔNG NGHIỆP HÀ NỘI                       Độc lập- Tự do- Hạnh phúc ");
+        XWPFParagraph paragraph3 = document.createParagraph();
+        run = paragraph3.createRun();
+        run.setText("    Thông báo số:" + txtso.getText() + "                         Hà Nội, ngày " + txttungay.getText() + " ");
+        XWPFParagraph paragraph4 = document.createParagraph();
+        run = paragraph4.createRun();
+        run.setText("                                       ----THÔNG BÁO---                          ");
+        XWPFParagraph paragraph5 = document.createParagraph();
+        run = paragraph5.createRun();
+        run.setText(" Trường DDH CNHN thông báo đến sinh viên toàn trường  nộp học phí kỳ: " + txtky.getText() + " năm học: " + txtnamhoc.getText() + " nội dung như sau:" + txtthongbao.getText() + "  ");
+        XWPFParagraph paragraph6 = document.createParagraph();
+        run = paragraph6.createRun();
+        run.setText(" Thời gian nộp học phí từ ngày:" + txttungay.getText() + "           đến ngày " + txtdenngay.getText() + " ");
+        XWPFParagraph paragraph7 = document.createParagraph();
+        run = paragraph7.createRun();
+        run.setText(" Nơi nhận                                                          Hiệu trưởng ");
+        XWPFParagraph paragraph8 = document.createParagraph();
+        run = paragraph8.createRun();
+        run.setText(" -các phòng ban ");
+
+        // Write the Document in file system
+        FileOutputStream out = null;
         try {
-            out = new FileOutputStream(new File("Thông Báo số '"+txtso.getText()+"'.docx"));
+            out = new FileOutputStream(new File("Thông Báo số '" + txtso.getText() + "'.docx"));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ThongBaoNopTienLayout.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -420,7 +405,7 @@ public class ThongBaoNopTienLayout extends javax.swing.JPanel {
         } catch (IOException ex) {
             Logger.getLogger(ThongBaoNopTienLayout.class.getName()).log(Level.SEVERE, null, ex);
         }
-    System.out.println("Đã xuất thông báo");
+        System.out.println("Đã xuất thông báo");
 
     }//GEN-LAST:event_btnxuatthongbaoActionPerformed
 

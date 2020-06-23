@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import view.DangNhap;
+import view.DangNhapLayOut;
 
 /**
  *
@@ -31,7 +31,7 @@ public class ThuHocPhiHaUI {
                 System.out.println("Họ tên:" + result.getString("hoten"));
                 System.out.println("Quê:" + result.getString("quequan"));
                 System.out.println("=====================================");
-                DangNhap dangnhap = new DangNhap();
+                DangNhapLayOut dangnhap = new DangNhapLayOut();
                 dangnhap.setVisible(true);
             }
         } catch (SQLException ex) {
