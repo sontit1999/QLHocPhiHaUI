@@ -141,28 +141,36 @@ public class SinhVienLayOut extends javax.swing.JFrame {
         txtaThongbao.setRows(5);
         jScrollPane1.setViewportView(txtaThongbao);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 390, -1));
-        getContentPane().add(txtQueQuan, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 196, 130, -1));
-        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 234, 130, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 350, 50));
 
+        txtQueQuan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtQueQuanActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtQueQuan, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, 130, -1));
+        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, 130, -1));
+
+        btnDangKyMon.setBackground(new java.awt.Color(255, 255, 51));
         btnDangKyMon.setText("Đăng ký môn học");
         btnDangKyMon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDangKyMonActionPerformed(evt);
             }
         });
-        getContentPane().add(btnDangKyMon, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 329, 170, 30));
+        getContentPane().add(btnDangKyMon, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 330, 170, 30));
 
+        btnSua.setBackground(new java.awt.Color(255, 255, 0));
         btnSua.setText("Cập nhật thông tin");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSuaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 274, 170, 30));
+        getContentPane().add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 270, 170, 30));
 
         jdNgaySinh.setDateFormatString("dd/MM/yyyy\n");
-        getContentPane().add(jdNgaySinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 155, 160, -1));
+        getContentPane().add(jdNgaySinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 160, -1));
 
         lbquequan.setText("                      ");
         getContentPane().add(lbquequan, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 199, 121, -1));
@@ -185,13 +193,14 @@ public class SinhVienLayOut extends javax.swing.JFrame {
         lbcongno.setText("                      ");
         getContentPane().add(lbcongno, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 313, 121, -1));
 
+        btnReload.setBackground(new java.awt.Color(255, 255, 51));
         btnReload.setText("Reload");
         btnReload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReloadActionPerformed(evt);
             }
         });
-        getContentPane().add(btnReload, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 380, 170, 30));
+        getContentPane().add(btnReload, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 380, 170, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -216,6 +225,10 @@ public class SinhVienLayOut extends javax.swing.JFrame {
     private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
         GetDataSinhVien();
     }//GEN-LAST:event_btnReloadActionPerformed
+
+    private void txtQueQuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQueQuanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtQueQuanActionPerformed
 
     /**
      * @param args the command line arguments
