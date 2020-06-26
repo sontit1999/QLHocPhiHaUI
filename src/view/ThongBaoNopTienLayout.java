@@ -406,6 +406,7 @@ public class ThongBaoNopTienLayout extends javax.swing.JPanel {
             Logger.getLogger(ThongBaoNopTienLayout.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Đã xuất thông báo");
+         JOptionPane.showMessageDialog(jButton1, "Đã xuất thông báo ra file word!");
 
     }//GEN-LAST:event_btnxuatthongbaoActionPerformed
 
